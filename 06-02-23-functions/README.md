@@ -7,7 +7,7 @@ This exercise is to help you familiarize yourself with variables and objects:
 
 ## Your Mission
 
-There are three programs you should write, in increasing difficulty.
+There are three programs you should write, in increasing difficulty. Each program should be written as its own module; its own Python file.
 * The classic number guessing game. The computer picks a number between 1 and 100, and asks you to guess. It tells you if you were too high or too low, and gives you six chances to guess.
 * Hangman. The computer picks a word from a selection it knows, shows you the blanks, and asks you to guess. Every successful guess fills in those blanks. Every failed guess draws a new piece of the hangman. You have six chances to win.
 * Wordle. The computer picks a five-letter word from a selection. You have six chances to guess it. After every guess it prints your guess again; every correct letter is in green, and every letter which is in the word but in the wrong position is in yellow.
@@ -34,7 +34,7 @@ This exercise is to help you understand how data flows into, through, and out of
   if __name__ == '__main__':
     main()
   ```
-  That's _it_. Your import guard calls a function called `main`, and that function has to arrange everything else.
+  That's _it_. Your import guard calls a function called `main`, and that function has to arrange everything else. All the logic of your program must be contained within functions.
 * Each function body can contain no more than five lines.
   * The function signature, i.e. `def myfunc():` does not count towards this limit.
  
