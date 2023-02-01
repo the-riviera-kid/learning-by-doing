@@ -37,4 +37,11 @@ This exercise is to help you understand how data flows into, through, and out of
   That's _it_. Your import guard calls a function called `main`, and that function has to arrange everything else. All the logic of your program must be contained within functions.
 * Each function body can contain no more than five lines.
   * The function signature, i.e. `def myfunc():` does not count towards this limit.
- 
+
+## Advice
+
+Okay, so I'm not a total bastard. 
+
+My advice is; don't try and get it perfect first time. The first rule is more important than the second rule. If the only way you can find to make it work requires an 8 line function, sure. Get the program working, understand how it works, and then come back and try to split up the eight line function.
+
+Make it, make it right, and make it good, in that order.
