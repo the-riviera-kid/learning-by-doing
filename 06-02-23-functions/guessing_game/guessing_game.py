@@ -5,8 +5,9 @@
     It tells you if you were too high or too low, and gives you six chances to guess.
 
     Problem Steps:
+    1. Computer gets a random number between 1 and 100
     1. Give the user the rules to play the game (including that they have 6 chances to guess)
-    2. Print - You have {number} of guesses
+    2. Print - You have {number} guesses
     3. Ask user to guess a number between 1 and 100
     4. Decrease the guesses count by 1
     5. Check if the guessed number is correct
@@ -22,8 +23,30 @@
     15. Return to step 7
 '''
 
+from random import randint
+
+
+def computer_number():
+    number = randint(1, 100)
+    print(number) # For the sake of creation
+    return number
+
+def game_rules(number_of_guesses):
+    print("This is a number guessing game. \nYou have 6 chances to guess the number correctly. \nLet's play!")
+    print()
+    print(f'You have {number_of_guesses} guesses.')
+    user_guess = int(input('Guess a number between 1 and 100: '))
+    return user_guess
+
+def check_user_wins(number, user_guess):
+    if user_guess == number:
+        print('You guessed correctly!')
+
+
 def main():
-    pass
+    count = 6
+    computer_number()
+    game_rules(count)
 
 
 
