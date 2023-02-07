@@ -1,9 +1,15 @@
 import inspect
-import guess_max_4
-def main():
-    functions = inspect.getmembers(guess_max_4, inspect.isfunction)
+import sys
+import importlib.util
+
+def main(module_path):
+    spec = importlib.util.spec_from_file_location("target", module_path)
+    mod = importlib.util.module_from_spec(spec)
+    sys.modules["target"] = mod
+    spec.loader.exec_module(mod)
+    functions = inspect.getmembers(mod, inspect.isfunction)
     for name, fn in functions:
         print(f"{name}: {len(inspect.getsourcelines(fn)[0])}")
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv[1])
