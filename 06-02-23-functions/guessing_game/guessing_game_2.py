@@ -28,23 +28,21 @@ from random import randint
 
 def main():
     game_rules()
-    random_number = get_random_number()
-    user_number = get_user_number()
-
-    too_high = number_too_high(user_number, random_number)
-    too_low = number_too_low(user_number, random_number)
-
     guesses = 6
-    incorrect_guess_countdown(too_high, too_low, guesses)
-    user_wins = check_user_wins(user_number, random_number)
-
+    user_wins = False
+    random_number = get_random_number()
     while not user_wins and guesses != 0:
         guesses -= 1
-        user_number = get_user_number()
-        too_high = number_too_high(user_number, random_number)
-        too_low = number_too_low(user_number, random_number)
-        incorrect_guess_countdown(too_high, too_low, guesses)
-        user_wins = check_user_wins(user_number, random_number)
+        user_wins = play_game(random_number, guesses)
+
+
+def play_game(random_number, guesses):
+    user_number = get_user_number()
+    too_high = number_too_high(user_number, random_number)
+    too_low = number_too_low(user_number, random_number)
+    incorrect_guess_countdown(too_high, too_low, guesses)
+    user_wins = check_user_wins(user_number, random_number)
+    return user_wins
 
 
 def game_rules():
@@ -61,8 +59,8 @@ def get_user_number():
     guess = int(input('Guess a number between 1 and 100: '))
     return guess
 
-def number_too_high(user_guess, generated_number):
-    if user_guess > generated_number:
+def number_too_high(user_guess, target_number):
+    if user_guess > target_number:
         print('Your guess is too high')
         return True
 
