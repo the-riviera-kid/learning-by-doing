@@ -30,6 +30,11 @@ def main():
     game_rules()
     random_number = get_random_number()
     user_number = get_user_number()
+    too_high = number_too_high(user_number, random_number)
+    too_low = number_too_low(user_number, random_number)
+    if too_high or too_low:
+        guesses_remaining = guess_count()
+        print(f'You have {guesses_remaining} guesses remaining')
 
 
 def game_rules():
@@ -47,15 +52,21 @@ def get_user_number():
     return guess
 
 def guess_count():
-    pass
+    for guesses in range(7):
+        guesses -=1
+    return guesses
+
+def number_too_high(user_guess, generated_number):
+    if user_guess > generated_number:
+        print('Your guess is too high')
+        return True
+
+def number_too_low(user_guess, generated_number):
+    if user_guess < generated_number:
+        print('Your guess is too low')
+        return True
 
 def check_user_wins():
-    pass
-
-def number_too_high():
-    pass
-
-def number_too_low():
     pass
 
 def replay():
