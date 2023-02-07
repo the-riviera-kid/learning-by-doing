@@ -33,6 +33,7 @@ def main():
     too_high = number_too_high(user_number, random_number)
     too_low = number_too_low(user_number, random_number)
     incorrect_guess(too_high, too_low)
+    check_user_wins(user_number, random_number)
 
 def game_rules():
     print("This is a number guessing game. \nYou have 6 chances to guess the number correctly. \nLet's play!")
@@ -68,12 +69,17 @@ def incorrect_guess(too_high, too_low):
         guesses_remaining = guess_count()
         print(f'You have {guesses_remaining} guesses remaining')
 
-def check_user_wins():
-    pass
+def check_user_wins(user_guess, generated_number):
+    if user_guess == generated_number:
+        print('You guessed correctly!')
+    return replay()
 
 def replay():
-    pass
-
+    play_again = input('Would you like to play again? (y/n) ')
+    if play_again == 'y':
+        main()
+    else:
+        exit()
 
 if __name__ == '__main__':
     main()
