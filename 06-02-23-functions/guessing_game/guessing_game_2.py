@@ -28,16 +28,23 @@ from random import randint
 
 def main():
     game_rules()
+    random_number = get_random_number()
+    user_number = get_user_number()
 
 
 def game_rules():
-    pass
+    print("This is a number guessing game. \nYou have 6 chances to guess the number correctly. \nLet's play!")
+    print()
+    print(f'You have 6 guesses.')
 
 def get_random_number():
-    pass
+    number = randint(1, 100)
+    print(number) # For the sake of creation
+    return number
 
 def get_user_number():
-    pass
+    guess = int(input('Guess a number between 1 and 100: '))
+    return guess
 
 def guess_count():
     pass
