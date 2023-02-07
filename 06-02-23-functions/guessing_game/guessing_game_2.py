@@ -32,10 +32,7 @@ def main():
     user_number = get_user_number()
     too_high = number_too_high(user_number, random_number)
     too_low = number_too_low(user_number, random_number)
-    if too_high or too_low:
-        guesses_remaining = guess_count()
-        print(f'You have {guesses_remaining} guesses remaining')
-
+    incorrect_guess(too_high, too_low)
 
 def game_rules():
     print("This is a number guessing game. \nYou have 6 chances to guess the number correctly. \nLet's play!")
@@ -65,6 +62,11 @@ def number_too_low(user_guess, generated_number):
     if user_guess < generated_number:
         print('Your guess is too low')
         return True
+
+def incorrect_guess(too_high, too_low):
+    if too_high or too_low:
+        guesses_remaining = guess_count()
+        print(f'You have {guesses_remaining} guesses remaining')
 
 def check_user_wins():
     pass
