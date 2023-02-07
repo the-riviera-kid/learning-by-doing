@@ -26,29 +26,67 @@
 from random import randint
 
 
-def computer_number():
-    number = randint(1, 100)
+def main():
+    game_rules()
+    guesses = 6
+    user_wins = False
+    random_number = get_random_number()
+    while not user_wins and guesses != 0:
+        guesses -= 1
+        user_wins = play_game(random_number, guesses)
+
+
+def play_game(random_number, guesses):
+    user_number = get_user_number()
+    too_high = number_too_high(user_number, random_number)
+    too_low = number_too_low(user_number, random_number)
+    incorrect_guess_countdown(too_high, too_low, guesses)
+    user_wins = check_user_wins(user_number, random_number)
+    return user_wins
+
+
+def game_rules():
+    print("This is a number guessing game. \nYou have 6 chances to guess the number correctly. \nLet's play!")
+    print()
+    print(f'You have 6 guesses.')
+
+def get_random_number():
+    number = randint(1, 101)
     print(number) # For the sake of creation
     return number
 
-def game_rules(number_of_guesses):
-    print("This is a number guessing game. \nYou have 6 chances to guess the number correctly. \nLet's play!")
-    print()
-    print(f'You have {number_of_guesses} guesses.')
-    user_guess = int(input('Guess a number between 1 and 100: '))
-    return user_guess
+def get_user_number():
+    guess = int(input('Guess a number between 1 and 100: '))
+    return guess
 
-def check_user_wins(number, user_guess):
-    if user_guess == number:
+def number_too_high(user_guess, target_number):
+    if user_guess > target_number:
+        print('Your guess is too high')
+        return True
+
+def number_too_low(user_guess, generated_number):
+    if user_guess < generated_number:
+        print('Your guess is too low')
+        return True
+
+def incorrect_guess_countdown(too_high, too_low, guesses_remaining):
+    if too_high or too_low:
+        print(f'You have {guesses_remaining} guesses remaining')
+        return True
+
+def check_user_wins(user_guess, generated_number):
+    if user_guess == generated_number:
         print('You guessed correctly!')
+        return replay()
+    else:
+        return False
 
-
-def main():
-    count = 6
-    computer_number()
-    game_rules(count)
-
-
+def replay():
+    play_again = input('Would you like to play again? (y/n) ')
+    if play_again == 'y':
+        main()
+    else:
+        exit()
 
 if __name__ == '__main__':
     main()
