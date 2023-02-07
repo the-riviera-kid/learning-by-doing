@@ -30,10 +30,22 @@ def main():
     game_rules()
     random_number = get_random_number()
     user_number = get_user_number()
+
     too_high = number_too_high(user_number, random_number)
     too_low = number_too_low(user_number, random_number)
-    incorrect_guess(too_high, too_low)
-    check_user_wins(user_number, random_number)
+
+    guesses = 6
+    incorrect_guess_countdown(too_high, too_low, guesses)
+    user_wins = check_user_wins(user_number, random_number)
+
+    while not user_wins and guesses != 0:
+        guesses -= 1
+        user_number = get_user_number()
+        too_high = number_too_high(user_number, random_number)
+        too_low = number_too_low(user_number, random_number)
+        incorrect_guess_countdown(too_high, too_low, guesses)
+        user_wins = check_user_wins(user_number, random_number)
+
 
 def game_rules():
     print("This is a number guessing game. \nYou have 6 chances to guess the number correctly. \nLet's play!")
@@ -41,18 +53,13 @@ def game_rules():
     print(f'You have 6 guesses.')
 
 def get_random_number():
-    number = randint(1, 100)
+    number = randint(1, 101)
     print(number) # For the sake of creation
     return number
 
 def get_user_number():
     guess = int(input('Guess a number between 1 and 100: '))
     return guess
-
-def guess_count():
-    for guesses in range(7):
-        guesses -=1
-    return guesses
 
 def number_too_high(user_guess, generated_number):
     if user_guess > generated_number:
@@ -64,15 +71,17 @@ def number_too_low(user_guess, generated_number):
         print('Your guess is too low')
         return True
 
-def incorrect_guess(too_high, too_low):
+def incorrect_guess_countdown(too_high, too_low, guesses_remaining):
     if too_high or too_low:
-        guesses_remaining = guess_count()
         print(f'You have {guesses_remaining} guesses remaining')
+        return True
 
 def check_user_wins(user_guess, generated_number):
     if user_guess == generated_number:
         print('You guessed correctly!')
-    return replay()
+        return replay()
+    else:
+        return False
 
 def replay():
     play_again = input('Would you like to play again? (y/n) ')
