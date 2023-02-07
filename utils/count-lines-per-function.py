@@ -9,7 +9,8 @@ def main(module_path):
     spec.loader.exec_module(mod)
     functions = inspect.getmembers(mod, inspect.isfunction)
     for name, fn in functions:
-        print(f"{name}: {len(inspect.getsourcelines(fn)[0])}")
+        # subtract 1 to account for the "def" line (yes, it's a hack)
+        print(f"{name}: {len(inspect.getsourcelines(fn)[0])-1}")
 
 if __name__ == '__main__':
     main(sys.argv[1])
