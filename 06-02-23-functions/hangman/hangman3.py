@@ -1,54 +1,82 @@
+'''
+    Challenge:
+    The computer picks a word from a selection it knows, shows you the blanks,
+    and asks you to guess. Every successful guess fills in those blanks.
+    Every failed guess draws a new piece of the hangman. You have six chances to win.
+
+    Problem Steps:
+    1. Computer picks a random word from a selection
+    2. Give the player the rules to play the game (including that they have 6 chances to guess)
+    3. Show player the blanks for each letter of the chosen word
+    4. Ask the player to guess a letter
+    5. Check if the guessed letter is in the word
+    6. If it is, fill in those blanks
+    7. Repeat from step 4
+    8. If no match, draw a piece of the hangman (decreasing the count by 1)
+    9. Repeat from step 4
+    10. If all the letters are filled, player wins
+    11. Check if player wants to play again - Print 'Would you like to play again? y/n '
+    12. If 'y' return to step 1 and set number of guesses back to 6
+    13. If 'n' exit()
+    14. When guesses == 0, hangman is complete - print 'Too bad, you've run out of guesses'
+    15. Return to step 11
+'''
+
 import random
 
 
 def main():
-    # Setup
-    guesses_remaining = 6
+    count = 6
+    correct_guesses = []
+    word = target_word()
+    print(word)
+    print_blanks(word)
+    
+    while blanks(word, correct_guesses) and count > 0:
+        guess = play_game(word, correct_guesses)
+        if guess not in word:
+            count -=1
+            hangman(count)
+
+
+def target_word():
     word_list = ['asleep', 'artist', 'beauty', 'agreed', 'doubts', 'stones', 'emerge', 'legend', 'finish', 'clever', 'island']
     word = random.choice(word_list)
-    print(word)
-    correct_guesses = []
-    print_blanks(word)
-
-    while blanks_are_left(word, correct_guesses) and guesses_remaining > 0:
-        user_letter = play_game(word, correct_guesses)
-        if user_letter not in word:
-            guesses_remaining -= 1
-            hangman(guesses_remaining)
-
-
-def blanks_are_left(word, correct_guesses):
-    for letter in word:
-        if letter not in correct_guesses:
-            return True
-    return False
+    return word
 
 
 def print_blanks(word):
     for letter in word:
         print('_', end=' ')
-    print()
+    print('\n\n')
 
+
+def blanks(word, correct_guesses):
+    for letter in word:
+        if letter not in correct_guesses:
+            return True
+    return False
+    
 
 def play_game(word, correct_guesses):
-    user_letter = get_user_guess()
-    print_result(word, user_letter, correct_guesses)
-    return user_letter
+    guess = user_guess()
+    compare_guess_to_word(word, guess, correct_guesses)
+    return guess
 
 
-def get_user_guess():
-    user_letter = input('Enter your letter: ')
-    return user_letter
+def user_guess():
+    guess = input('Guess your letter: ')
+    return guess
 
 
-def print_result(word, user_letter, correct_guesses):
+def compare_guess_to_word(word, guess, correct_guesses):
     for letter in word:
-        if user_letter == letter or letter in correct_guesses:
+        if letter == guess or letter in correct_guesses:
             print(letter, end=' ')
-            correct_guesses.append(user_letter)
+            correct_guesses.append(guess)
         else:
             print('_', end=' ')
-    print()
+    print('\n\n')
 
 
 def hangman(guesses_remaining):
