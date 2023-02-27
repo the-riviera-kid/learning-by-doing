@@ -42,6 +42,7 @@ Same as above; print the answers exactly.
     * functions
     * constants
 * You are not allowed other code or variables at the top level of your module. Inside functions however, you can do whatever you like.
-* Try to have no more than either lines of code per function.
+* Try to have no more than eight lines of code per function.
+* You have to calculate the answers in your program; you can't just work it out by hand and then `print("Godzilla")`.
 * You are *not* allowed to edit `movie_data.py`
 
