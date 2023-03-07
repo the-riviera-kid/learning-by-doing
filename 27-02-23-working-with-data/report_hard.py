@@ -20,8 +20,8 @@ def main():
     print('\nThe actors with best average ratings are:')
     for actor in actor_with_best_rating:
         print(actor)
-    worst_genre = least_popular_genre_in_1980s(movie_list)
-    print(f'\nThe least popular genre in the 1980s was {worst_genre}', end='\n\n')
+    least_popular = least_popular_genre_in_1980s(movie_list)
+    print(f'\nThe least popular genre in the 1980s was {least_popular}', end='\n\n')
 
 
 def actor_appearring_in_most_movies(movie_list):
@@ -55,18 +55,20 @@ def best_rated_actor(movie_list):
 
 
 def least_popular_genre_in_1980s(movie_list):
-    genre_dict = {}
+    genres = []
+    genres_1980s = []
     for movie in movie_list:
         genre = movie['genre']
-        rating = movie['rating']
-        if genre in genre_dict:
-                genre_dict[genre].append(rating)
-        else:
-            genre_dict[genre] = [rating]
-    for genre, rating in genre_dict.items():
-        genre_dict[genre] = sum(genre_dict[genre])//len(genre_dict[genre])
-    worst_genre = min(genre_dict, key=genre_dict.get)
-    return worst_genre
+        genres.append(genre)
+        year = movie['year']
+        if year >= 1980 and year < 1990:
+            genres_1980s.append(genre)
+    genre_dict = {}
+    for genre in genres:
+        number = genres_1980s.count(genre)
+        genre_dict[genre] = number
+    least_popular = min(genre_dict, key=genre_dict.get)
+    return least_popular
 
 
 if __name__ == '__main__':
