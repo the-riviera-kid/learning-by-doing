@@ -3,6 +3,7 @@ import random
 
 
 QUESTION_PATH = './questions.txt'
+HIGH_SCORE_PATH = './high_score.txt'
 CARDS_PER_GAME = 5
 
 class Card():
@@ -45,13 +46,25 @@ class Card():
 
 def main():
     cards = load_cards()
+    high_score, high_scorer = load_high_score()
+    if high_scorer is None:
+        print('There is no high score. Be the first to set one!')
+    else:
+        print(f'The high score is {high_score}, set by {high_scorer}')
+
     hand = random.sample(cards, k=CARDS_PER_GAME)
     score = 0
     for card in hand:
         print(card.render())
         player_answer = input("Your guess? > ")
+        was_correct = card.is_guess_correct(player_answer)
+        print(f'{"Correct!" if was_correct else "Incorrect!"}')
         score += 1 if card.is_guess_correct(player_answer) else 0
     print(f'Final score: {score}')
+
+    if score >= high_score:
+        name = input('You set the high score! What is your name? > ')
+        save_high_score(score, name)
 
 def load_cards():
     cards = []
@@ -62,6 +75,18 @@ def load_cards():
 
     return cards
 
+def load_high_score():
+    try:
+        with open(HIGH_SCORE_PATH, 'r') as f:
+            score, scorer = [x.strip() for x in f.readlines()]
+        return int(score), scorer
+    except FileNotFoundError:
+        return 0, None
+
+
+def save_high_score(score, name):
+    with open(HIGH_SCORE_PATH, 'w') as f:
+        f.writelines((f'{score}\n', f'{name}\n'))
 
 def stripper(it):
     return (x.strip() for x in it)
