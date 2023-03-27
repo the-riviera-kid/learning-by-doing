@@ -1,4 +1,4 @@
-'''quit
+'''
     dojo_movie_database.py : This program will import the movie data, and then provide a menu of options to the user. 
     The user can select an option, the program will do it, and afterwards the program should return to the main menu. 
     
@@ -77,10 +77,14 @@ def print_movies_starring_actor(movies_starring_actor, main_menu, requested_acto
 def search_movies_by_genre(movie_list, main_menu):
     genre = input('Which genre would you like to see? \n\n')
     print()
+    genre_list = []
     for movie in movie_list:
         if genre.lower() in movie['genre']:
+            genre_list.append(movie)
+    if genre_list:
+        for movie in genre_list:
             print(movie['title'], movie['year'])
-    if genre.lower() not in movie['genre']:
+    else:
         print(f'Sorry, we have no "{genre}" movies in our database.')
         search_movies_by_genre(movie_list, main_menu)
     return main_menu

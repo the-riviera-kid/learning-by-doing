@@ -20,21 +20,23 @@
     Quit : Ends the program.
 '''
 
-def main():
-    with open('movie_data.txt', 'r') as movie_txt_data:
-        movie_data = movie_txt_data.readlines()
-        movie_data = [i.strip() for i in movie_data]
-        movies = [movie_data[i:i+5] for i in range(0, len(movie_data), 5)]
-        movie_list = create_dict(movies)
-    main_dojo(movie_list)
+import file_handling
+
+# def main():
+#     with open('movie_data.txt', 'r') as movie_txt_data:
+#         movie_data = movie_txt_data.readlines()
+#         movie_data = [i.strip() for i in movie_data]
+#         movies = [movie_data[i:i+5] for i in range(0, len(movie_data), 5)]
+#         movie_list = create_dict(movies)
+#     main_dojo(movie_list)
 
 
-def create_dict(movies):
-    keys = ['title', 'actors', 'year', 'genre', 'rating']
-    movies = [dict(zip(keys, movie)) for movie in movies]
-    for movie in movies:
-        movie['actors'] = movie['actors'].split(', ')
-    return movies
+# def create_dict(movies):
+#     keys = ['title', 'actors', 'year', 'genre', 'rating']
+#     movies = [dict(zip(keys, movie)) for movie in movies]
+#     for movie in movies:
+#         movie['actors'] = movie['actors'].split(', ')
+#     return movies
 
 # ============================================================================
 
@@ -133,7 +135,7 @@ def add_movie_to_db(movie_list, main_menu):
     add_complete = False
     while not add_complete:
         title, actors, year, genre, rating = get_movie_data()
-        update_txt_file(title, actors, year, genre, rating)
+        file_handling.update_txt_file(title, actors, year, genre, rating)
         add_complete = add_new_movie(movie_list, main_menu, title, actors, year, genre, rating, add_complete)
 
 
@@ -146,10 +148,10 @@ def get_movie_data():
     return title, actors, year, genre, rating
 
 
-def update_txt_file(title, actors, year, genre, rating):
-    with open('movie_data.txt', 'a') as movie_txt_data:
-        actors = ', '.join(actors)
-        movie_txt_data.write(title + '\n' + actors + '\n' + str(year) + '\n' + genre + '\n' + str(rating) + '\n')
+# def update_txt_file(title, actors, year, genre, rating):
+#     with open('movie_data.txt', 'a') as movie_txt_data:
+#         actors = ', '.join(actors)
+#         movie_txt_data.write(title + '\n' + actors + '\n' + str(year) + '\n' + genre + '\n' + str(rating) + '\n')
 
 
 def add_new_movie(movie_list, main_menu, title, actors, year, genre, rating, add_complete):
@@ -167,5 +169,5 @@ def quit(movie_list, main_menu):
     exit()
 
 
-if __name__ == '__main__':
-    main()
+# if __name__ == '__main__':
+#     main()

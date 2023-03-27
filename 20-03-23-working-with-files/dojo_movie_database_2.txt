@@ -21,22 +21,12 @@
 '''
 
 def main():
-    movie_txt_data = open('movie_data.txt', 'r')
-    movie_data = movie_txt_data.readlines()
-    movie_data = [i.strip() for i in movie_data]
-    movies = group_movies(movie_data)
-    movie_list = create_dict(movies)
-    movie_txt_data.close()
+    with open('movie_data.txt', 'r') as movie_txt_data:
+        movie_data = movie_txt_data.readlines()
+        movie_data = [i.strip() for i in movie_data]
+        movies = [movie_data[i:i+5] for i in range(0, len(movie_data), 5)]
+        movie_list = create_dict(movies)
     main_dojo(movie_list)
-
-
-# Borrowed from Gijs ter Haar
-def group_movies(movie_data):
-    data = []
-    for i in range(0, len(movie_data), 5):
-        movies = movie_data[i:i+5]
-        data.append(movies)
-    return data
 
 
 def create_dict(movies):
@@ -82,6 +72,13 @@ def display_all_movies(movie_list, main_menu):
 
 
 def search_movies_by_actor(movie_list, main_menu):
+    search_complete = False
+    while not search_complete:
+        movies_starring_actor, requested_actor = movies_by_actor(movie_list)
+        search_complete = print_movies_starring_actor(movies_starring_actor, main_menu, requested_actor, search_complete)
+
+
+def movies_by_actor(movie_list):
     requested_actor = input("Which Actor's Movies would you like to see? ")
     movies_starring_actor = {}
     for movie in movie_list:
@@ -91,63 +88,79 @@ def search_movies_by_actor(movie_list, main_menu):
                     movies_starring_actor[actor].append({movie['title']: movie['year']})
                 else:
                     movies_starring_actor[actor] = [{movie['title']: movie['year']}]
-    return print_movies_starring_actor(movies_starring_actor, main_menu, requested_actor, movie_list)
+    return movies_starring_actor, requested_actor
 
 
-def print_movies_starring_actor(movies_starring_actor, main_menu, requested_actor, movie_list):
+def print_movies_starring_actor(movies_starring_actor, main_menu, requested_actor, search_complete):
     if movies_starring_actor:
         for actor, movie in movies_starring_actor.items():
             print(f'\n{actor} starred in:')
             for movie_dict in movie:
                 for title, year in movie_dict.items():
                     print(f'{title} in the year {year}') 
-        return main_menu
+        return main_menu, search_complete
     print(f'Sorry, we have no movies starring "{requested_actor}" in our database.')
-    return search_movies_by_actor(movie_list, main_menu)
+    return search_complete
         
 
 def search_movies_by_genre(movie_list, main_menu):
+    search_complete = False
+    while not search_complete:
+        genre_list, genre = movies_by_genre(movie_list)
+        search_complete = print_movies_by_genre(genre_list, genre, search_complete, main_menu)
+
+def movies_by_genre(movie_list):
     genre = input('Which genre would you like to see? \n\n')
     print()
     genre_list = []
     for movie in movie_list:
         if genre.lower() in movie['genre']:
             genre_list.append(movie)
+    return genre_list, genre
+
+
+def print_movies_by_genre(genre_list, genre, search_complete, main_menu):
     if genre_list:
         for movie in genre_list:
             print(movie['title'], movie['year'])
     else:
         print(f'Sorry, we have no "{genre}" movies in our database.')
-        search_movies_by_genre(movie_list, main_menu)
-    return main_menu
+        return search_complete
+    return search_complete, main_menu
 
 
 def add_movie_to_db(movie_list, main_menu):
-    new_movie = {}
+    add_complete = False
+    while not add_complete:
+        title, actors, year, genre, rating = get_movie_data()
+        update_txt_file(title, actors, year, genre, rating)
+        add_complete = add_new_movie(movie_list, main_menu, title, actors, year, genre, rating, add_complete)
+
+
+def get_movie_data():
     title = input('Title: ').capitalize()
     actors = input('Actors (full names separated by a comma): ').title().split(', ')
     year = int(input('Year: '))
     genre = input('Genre: ')
     rating = int(input('Rating: '))
-    update_txt_file(title, actors, year, genre, rating)
-    return add_new_movie(movie_list, main_menu, new_movie, title, actors, year, genre, rating)
+    return title, actors, year, genre, rating
 
 
-def add_new_movie(movie_list, main_menu, new_movie, title, actors, year, genre, rating):
+def update_txt_file(title, actors, year, genre, rating):
+    with open('movie_data.txt', 'a') as movie_txt_data:
+        actors = ', '.join(actors)
+        movie_txt_data.write(title + '\n' + actors + '\n' + str(year) + '\n' + genre + '\n' + str(rating) + '\n')
+
+
+def add_new_movie(movie_list, main_menu, title, actors, year, genre, rating, add_complete):
+    new_movie = {}
     new_movie['title'] = title
     new_movie['actors'] = actors
     new_movie['year'] = year
     new_movie['genre'] = genre
     new_movie['rating'] = rating
     movie_list.append(new_movie)
-    return movie_list, main_menu
-
-
-def update_txt_file(title, actors, year, genre, rating):
-    movie_txt_data = open('movie_data.txt', 'a')
-    actors = ', '.join(actors)
-    movie_txt_data.write(title + '\n' + actors + '\n' + str(year) + '\n' + genre + '\n' + str(rating) + '\n')
-    movie_txt_data.close()
+    return movie_list, main_menu, add_complete
 
 
 def quit(movie_list, main_menu):
