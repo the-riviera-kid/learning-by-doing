@@ -4,6 +4,10 @@ FEAR! TERROR! PANIC! An assessment! mesapeeplegonnadie!!!!
 
 Chill there, my hypothetical anxious friend. This is another exercise like any other. You won't be getting help from me to unblock you, but it's not intended to be difficult. Every concept in this exercise is something we've practiced before. You're all going to knock this out of the park!
 
+## Assessment Rules
+
+The differences between this and a regular week is just the amount of help you'll get from me. I will answer any questions regarding git, and getting hold of the assignment. If you suspect that the assignment is broken, ask me. I will also help you if you have questions about the assignment; if the instructions are not clear, please ask. Other than that, you'll have to solve it yourselves. Try to work on your own; if you're *really* stuck, ask each other, but please be very clear about this (i.e. a comment saying `# Portia helped me with this line`). Looking stuff up is perfectly fine.
+
 But what exactly will you be knocking out of the park? What indeed...
 
 ## Your Mission
