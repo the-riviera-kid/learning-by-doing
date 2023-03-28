@@ -31,15 +31,15 @@ import random
 
 def trivia_main(quiz_data):
     intro()
-    game = random.choices(quiz_data, k=5)
+    game = random.choices(quiz_data, k=5) # get 5 random dictionaries from quiz_data list
     score = 0
-    score = play_game(game, score)
+    score = play_game(game, score) # gets a new score
     print(f'Final score: {score}')
     return score
 
 
 def intro():
-    high_score = file_handling.get_high_score_data()
+    high_score = file_handling.get_high_score_data() # high_score is a single list ['0', 'nobody']
     if high_score == ['0', 'nobody']:
         print(f'There is no high score. Be the first to set one!')
     else:
@@ -47,22 +47,19 @@ def intro():
 
 
 def play_game(game, score):
-    for round in game:
-        game_answer = game_round(round)
-        score = compare_user_guess(game_answer, score)
+    for round in game: # for each of the 5 dictionaries
+        game_answer = game_round(round) # returns the answer by letter
+        score = compare_user_guess(game_answer, score) # sets a new score using the old score and the returned answer from previous function call
     return score
 
 
 def game_round(round):
-    game_question = round['question']
-    print(game_question)
-    game_choices = round['choices']
-    game_answer = round['answer']
-    for k, v in game_choices.items():
-        print(k, v)
-        if v == game_answer:
-            game_answer = k[0]
-    return game_answer
+    print(round['question'])
+    for letter, choice in round['choices'].items():
+        print(letter, choice) # prints a multiple choice
+        if choice == round['answer']: # if correct
+            round['answer'] = letter[0] # 'answer' is key and 'letter' is value -> ('A.' - get 'A' without the '.') => {'answer': 'A'}
+    return round['answer']
 
 
 def compare_user_guess(game_answer, score):
@@ -73,15 +70,3 @@ def compare_user_guess(game_answer, score):
     else:
         print('Incorrect!')
     return score
-
-
-
-
-
-# =======================================================
-
-def print_only_questions(quiz_data):
-    questions = []
-    for quiz in quiz_data:
-        questions.append(quiz['question'])
-    print(f'The questions are {questions}')

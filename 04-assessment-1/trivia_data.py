@@ -1,12 +1,5 @@
 import file_handling
-
-
-# create a list of dictionaries
-def questions_list(quiz_data):
-    questions = []
-    for i in quiz_data:
-        questions.append(question(i[0], i[1], i[2]))
-    return questions
+import random
 
 
 # create a dictionary for each question
@@ -18,11 +11,21 @@ def question(question, choices, answer):
     }
 
 
+# create a list of dictionaries
+def questions_list(quiz_data):
+    questions = [question(i[0], i[1], i[2]) for i in quiz_data] # uses the 3 indexes of each list as arguments to a function that creates dictionaries out of them (calls the function above)
+    return questions
+
+
 def make_dict_for_choices(quiz_data):
+    '''
+        Changes the 2nd item in the dict ('choices') from a list to a dictionary.
+    '''
     multi_choice = ['A.', 'B.', 'C.', 'D.']
-    for choices in quiz_data:
-        choice_quiz = dict(zip(multi_choice, choices['choices']))
-        choices['choices'] = choice_quiz
+    for quiz in quiz_data: # for dict in list
+        random.shuffle(quiz['choices']) # randomize the list of choices every time
+        choices = dict(zip(multi_choice, quiz['choices'])) # make a dict using 'multi_choice' list as keys & 'quiz' dict 'choices' value (list of choices) as values
+        quiz['choices'] = choices # where the key in 'quiz' dict is 'choices' -> value is now a dict
     return quiz_data
 
 
