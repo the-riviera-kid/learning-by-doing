@@ -1,12 +1,4 @@
 import trivia_data
-import trivia
-
-
-def main():
-    quiz_data = get_quiz_data()
-    high_score = get_high_score_data() # high_score is a single list ['0', 'nobody']
-    score = trivia.trivia_main(quiz_data) # runs the game and gets the user's score
-    update_high_score(score, high_score)
 
 
 def get_quiz_data():
@@ -35,6 +27,3 @@ def update_high_score(score, high_score):
             high_score[1] = name
             high_score_data.write(str(f'{high_score[0]} {high_score[1]}'))
 
-
-if __name__ == '__main__':
-    main()

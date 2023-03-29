@@ -29,6 +29,13 @@ import file_handling
 import random
 
 
+def main():
+    quiz_data = file_handling.get_quiz_data()
+    high_score = file_handling.get_high_score_data() # high_score is a single list ['0', 'nobody']
+    score = trivia_main(quiz_data) # runs the game and gets the user's score
+    file_handling.update_high_score(score, high_score)
+
+
 def trivia_main(quiz_data):
     intro()
     game = random.choices(quiz_data, k=5) # get 5 random dictionaries from quiz_data list
@@ -70,3 +77,7 @@ def compare_user_guess(game_answer, score):
     else:
         print('Incorrect!')
     return score
+
+
+if __name__ == '__main__':
+    main()
