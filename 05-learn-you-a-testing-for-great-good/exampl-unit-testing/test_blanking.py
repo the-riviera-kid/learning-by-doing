@@ -3,8 +3,7 @@ from blanking import blank
 
 def test_blank():
     with pytest.raises(TypeError, match='hangman'):
-        result = blank(None, None)
-        assert result == ''
+        blank(None, None)
 
 def test_blank_valid_word_no_characters():
     result = blank('asparagus', None)
@@ -32,5 +31,4 @@ def test_blank_same_char_guessed_multiple_times():
 
 def test_blank_word_is_wrong_type():
     with pytest.raises(TypeError, match='hangman'):
-        result = blank(23, 'ohdear')
-        assert result == ''
+        blank(23, 'ohdear')
