@@ -28,6 +28,10 @@ from card import parse_card
     ';*',
     ('J', 'C'),
     (x for x in 'AS'),
+    '',
+    '3',
+    'A',
+    'D'
 ])
 def test_parse_card_requires_valid_argument(argument):
     with pytest.raises(ValueError):
@@ -44,25 +48,6 @@ def test_parse_card_requires_valid_argument(argument):
 ])
 def test_parse_card_parses_rank_basics(shorthand, expected_rank):
     assert parse_card(shorthand)['rank'] == expected_rank
-
-numeric_ranks = list(range(2, 11))
-numeric_names = [(str(x), str(x)) for x in numeric_ranks]
-face_names = [('A', 'ace'), ('J', 'jack'), ('Q', 'queen'), ('K', 'king')]
-all_ranks = list(chain(numeric_names, face_names))
-suit_names = [('C', 'clubs'), ('D', 'diamonds'), ('H', 'hearts'), ('S', 'spades')]
-
-def build_case(ranks, suits):
-    return ((r[0], r[1], s[0], s[1]) for r, s in product(ranks, suits))
-
-rank_tests = [(f'{r}{s}', f'{rn}') for r, rn, s, _ in build_case(all_ranks, suit_names)]
-@pytest.mark.parametrize('shorthand, expected_rank', rank_tests)
-def test_parse_card_parses_rank(shorthand, expected_rank):
-    assert parse_card(shorthand)['rank'] == expected_rank
-
-suit_tests = [(f'{r}{s}', f'{sn}') for r, _, s, sn in build_case(all_ranks, suit_names)]
-@pytest.mark.parametrize('shorthand, expected_suit', suit_tests)
-def test_parse_card_parses_suit(shorthand, expected_suit):
-    assert parse_card(shorthand)['suit'] == expected_suit
 
 @pytest.mark.parametrize('shorthand, expected_description', [
     ('AS', 'an ace of spades'),
@@ -82,11 +67,40 @@ def test_parse_card_parses_suit(shorthand, expected_suit):
 def test_parse_card_description_basics(shorthand, expected_description):
     assert parse_card(shorthand)['description'] == expected_description
 
-nn = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']
-def convert_rn(rn):
-    return nn[int(rn)] if rn.isdigit() else rn
-    
-description_tests = [(f'{r}{s}', f'{"an" if r in "A8" else "a"} {convert_rn(rn)} of {sn}') for r, rn, s, sn in build_case(all_ranks, suit_names)]
+num_cards = [str(x) for x in range(2, 11)]
+face_cards= 'AJQK'
+ranks = list(chain(face_cards[0:1], num_cards, face_cards[1:]))
+suits = 'CDHS'
+
+rank_names = ['ace', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'jack', 'queen', 'king']
+suit_names = ['clubs', 'diamonds', 'hearts', 'spades']
+descriptive_names = ['ace', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight',
+                     'nine', 'ten', 'jack', 'queen', 'king']
+
+rank_lookup = dict(zip(ranks, rank_names))
+suit_lookup = dict(zip(suits, suit_names))
+description_lookup = dict(zip(ranks, descriptive_names))
+
+def article_for_rank(rank):
+    return 'an' if rank in 'A8' else 'a'
+
+def description_for_card(rank, suit):
+    return f'{article_for_rank(rank)} {description_lookup[rank]} of {suit_lookup[suit]}'
+
+def get_shorthand(rank, suit):
+    return f'{rank}{suit}'
+
+rank_tests = [(get_shorthand(r, s), rank_lookup[r]) for r, s in product(ranks, suits)]
+@pytest.mark.parametrize('shorthand, expected_rank', rank_tests)
+def test_parse_card_parses_rank(shorthand, expected_rank):
+    assert parse_card(shorthand)['rank'] == expected_rank
+
+suit_tests = [(get_shorthand(r, s), suit_lookup[s]) for r, s in product(ranks, suits)]
+@pytest.mark.parametrize('shorthand, expected_suit', suit_tests)
+def test_parse_card_parses_suit(shorthand, expected_suit):
+    assert parse_card(shorthand)['suit'] == expected_suit
+
+description_tests = [(get_shorthand(r, s), description_for_card(r, s)) for r, s in product(ranks,suits)]
 @pytest.mark.parametrize('shorthand, expected_description', description_tests)
 def test_parse_card_description_basics(shorthand, expected_description):
     assert parse_card(shorthand)['description'] == expected_description
