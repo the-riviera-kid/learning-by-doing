@@ -5,25 +5,33 @@ def test_card_is_dict():
     result = parse_card('5D')
     assert isinstance(result, dict)
 
-def test_card_is_dict_invalid_input():
-    with pytest.raises(TypeError, match='card parsing'):
+def test_card_is_dict_invalid_input_none():
+    with pytest.raises(ValueError, match='card parsing'):
         parse_card(None)
 
+def test_card_is_dict_invalid_input_empty_string():
+    with pytest.raises(ValueError, match='card parsing'):
+        parse_card('')
+
 def test_card_is_dict_invalid_input_empty_list():
-    with pytest.raises(TypeError, match='card parsing'):
+    with pytest.raises(ValueError, match='card parsing'):
         parse_card([])
 
 def test_card_is_dict_invalid_input_list():
-    with pytest.raises(TypeError, match='card parsing'):
+    with pytest.raises(ValueError, match='card parsing'):
         parse_card(['A', 'D'])
 
 def test_card_is_dict_invalid_input_empty_dict():
-    with pytest.raises(TypeError, match='card parsing'):
+    with pytest.raises(ValueError, match='card parsing'):
         parse_card({})
 
 def test_card_is_dict_invalid_input_empty_dict():
-    with pytest.raises(TypeError, match='card parsing'):
+    with pytest.raises(ValueError, match='card parsing'):
         parse_card({1: 'D', 'A': 'S'})
+
+def test_card_is_dict_invalid_input():
+    with pytest.raises(ValueError, match='card parsing'):
+        parse_card('05S')
 
 def test_rank_in_dict():
     result = parse_card('5D')
@@ -66,7 +74,7 @@ def test_rank_value_is_negative_too_long():
         parse_card('2AAAAH')
 
 def test_input_is_integer():
-    with pytest.raises(TypeError, match='card parsing'):
+    with pytest.raises(ValueError, match='card parsing'):
         parse_card(2)
 
 def test_rank_value_is_ace():
@@ -93,6 +101,10 @@ def test_suit_value_is_valid():
 
 def test_suit_in_dict():
     result = parse_card('5D')
+    assert 'suit' in result
+
+def test_suit_in_dict_10():
+    result = parse_card('10D')
     assert 'suit' in result
 
 def test_suit_value_is_diamonds():

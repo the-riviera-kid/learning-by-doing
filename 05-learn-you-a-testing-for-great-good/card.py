@@ -8,10 +8,8 @@ def parse_card(short_description): # 'AD' -> 'an ace of diamonds'
     return card # {'rank': 'ace', 'suit': 'diamond', 'description': 'an ace of diamonds'}
 
 def check_if_valid(short_description):
-    if not isinstance(short_description, str):
-        raise TypeError('Invalid card description, no good for card parsing.')
-    if short_description[-1] not in ['H', 'D', 'S', 'C']:
-        raise ValueError('Invalid suit in short description for card parsing.')
+    if not isinstance(short_description, str) or short_description == '' or short_description[-1] not in ['H', 'D', 'S', 'C']:
+        raise ValueError('Invalid card description, no good for card parsing.')
 
 # set key 'rank' in card dict for letter
 def set_rank_in_dict_if_letter(short_description, card, ranks):
@@ -26,7 +24,7 @@ def set_rank_in_dict_if_letter(short_description, card, ranks):
 
 # set key 'rank' in card dict for number
 def set_rank_in_dict_if_number(short_description, card, ranks):
-    if short_description[:-1].isnumeric() == False:
+    if short_description[:-1].isnumeric() == False or short_description[0] == '0':
             raise ValueError('Invalid rank for card parsing.')
     else:
         number = int(short_description[:-1])
@@ -39,7 +37,7 @@ def set_rank_in_dict_if_number(short_description, card, ranks):
 
 def set_suit_in_dict(short_description, suits, rank, card):
     for suit in suits:
-        if short_description[1].lower() in suit[0]: # AD -> 'd' in 'diamonds'
+        if short_description[-1].lower() in suit[0]: # AD -> 'd' in 'diamonds'
             card['suit'] = suit
             card = set_description_in_dict(card, rank, suit) # set key 'description' in card dict
     return card # card = {'rank': 'ace', 'suit': 'diamond'}

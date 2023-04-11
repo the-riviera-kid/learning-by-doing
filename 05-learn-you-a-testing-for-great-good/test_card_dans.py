@@ -60,11 +60,12 @@ def test_parse_card_parses_rank_basics(shorthand, expected_rank):
     ('8D', 'an eight of diamonds'),
     ('9S', 'a nine of spades'),
     ('10H', 'a ten of hearts'),
+    ('10C', 'a ten of clubs'),
     ('JD', 'a jack of diamonds'),
     ('QC', 'a queen of clubs'),
     ('KH', 'a king of hearts'),
 ])
-def test_parse_card_description_basics(shorthand, expected_description):
+def test_parse_card_description_basics_again(shorthand, expected_description):
     assert parse_card(shorthand)['description'] == expected_description
 
 num_cards = [str(x) for x in range(2, 11)]
