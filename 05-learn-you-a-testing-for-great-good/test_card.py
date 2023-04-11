@@ -53,10 +53,6 @@ def test_rank_value_is_king():
     result = parse_card('KD')
     assert result['rank'] == 'king'
 
-def test_rank_value_not_number():
-    result = parse_card('KD')
-    assert result['rank'] == 'king'
-
 # ===========================
 
 def test_suit_value_is_valid():
@@ -81,15 +77,19 @@ def test_description_in_dict():
     result = parse_card('8C')
     assert 'description' in result
 
-def test_description_value():
+def test_description_value_five():
     result = parse_card('5D')
     assert result['description'] == 'a five of diamonds'
 
 
-def test_description_value():
+def test_description_value_jack():
     result = parse_card('JD')
     assert result['description'] == 'a jack of diamonds'
 
-def test_description_value():
+def test_description_value_ace():
     result = parse_card('AC')
     assert result['description'] == 'an ace of clubs'
+
+def test_description_value_eight():
+    result = parse_card('8H')
+    assert result['description'] == 'an eight of hearts'
