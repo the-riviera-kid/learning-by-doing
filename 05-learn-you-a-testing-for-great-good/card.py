@@ -10,12 +10,12 @@ def parse_card(short_description): # 'AD' -> 'an ace of diamonds'
 def check_if_valid(short_description):
     if not isinstance(short_description, str):
         raise TypeError('Invalid card description, no good for card parsing.')
-    if short_description[-1].lower() not in ['h', 'd', 's', 'c']:
+    if short_description[-1] not in ['H', 'D', 'S', 'C']:
         raise ValueError('Invalid suit in short description for card parsing.')
 
 # set key 'rank' in card dict for letter
 def set_rank_in_dict_if_letter(short_description, card, ranks):
-    if short_description[0].lower() not in ['a', 'j', 'q', 'k']:
+    if short_description[0] not in ['A', 'J', 'Q', 'K']:
         rank = set_rank_in_dict_if_number(short_description, card, ranks)
     else:
         for shrt_rank, rank in ranks.items():
