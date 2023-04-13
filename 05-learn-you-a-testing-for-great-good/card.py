@@ -22,7 +22,7 @@ RANK_LOOKUP = {
 }
 
 def parse_card(shorthand):
-    if not shorthand or not isinstance(shorthand, str):
+    if not (shorthand and isinstance(shorthand, str) and len(shorthand) in (2, 3)):
         raise ValueError('No valid input argument was provided')
 
     rank = shorthand[0:-1] if len(shorthand) == 3 else shorthand[0]
