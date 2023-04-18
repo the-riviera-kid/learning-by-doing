@@ -24,6 +24,7 @@ def check_hand_is_valid(user_input):
                 return "Sorry, that's invalid"
         return False
             
+            
 def get_poker_description(user_input):
     card_list = []
     count_dict = {}
@@ -34,11 +35,8 @@ def get_poker_description(user_input):
     for card in card_list:
         rank_list.append(card['rank'])
 
-    print(rank_list)
-
     for rank in rank_list:
         count_dict[rank] = rank_list.count(rank)
-    print(count_dict)
 
     if 4 in count_dict.values():
         return 'Four Of A Kind'
@@ -60,9 +58,20 @@ def get_poker_description(user_input):
     elif 1 in count_dict.values():
         rank_list_numbers = [int(rank) for rank in rank_list if rank.isnumeric()]
         rank_list_other = [rank for rank in rank_list if not rank.isnumeric()]
-        print(rank_list_numbers)
-        print(rank_list_other)
         if sorted(rank_list_numbers) == sorted(list(range(min(rank_list_numbers), max(rank_list_numbers)+1))):
-            return 'Straight'
+            if len(rank_list_numbers) == 5:
+                return 'Straight'
+            elif len(rank_list_numbers) == 4:
+                if 'jack' in rank_list_other or 'ace' in rank_list_other:
+                    return 'Straight'
+            elif len(rank_list_numbers) == 3:
+                if 'jack' in rank_list_other and 'queen' in rank_list_other:
+                    return 'Straight'
+            elif len(rank_list_numbers) == 2:
+                if 'jack' in rank_list_other and 'queen' in rank_list_other and 'king' in rank_list_other:
+                    return 'Straight'
+            elif len(rank_list_numbers) == 1:
+                if 'jack' in rank_list_other and 'queen' in rank_list_other and 'king' in rank_list_other and 'ace' in rank_list_other:
+                    return 'Straight'
         return 'High Card'
     

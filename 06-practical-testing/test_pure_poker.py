@@ -55,9 +55,23 @@ def test_poker_straight_mixed_numbers():
     result = get_poker_description('6D 8C 10S 9S 7D')
     assert result == 'Straight'
 
-def test_poker_straight_mixed_numbers_others():
+def test_poker_straight_with_jack():
     result = get_poker_description('JD 8C 10S 9S 7D')
     assert result == 'Straight'
 
+def test_poker_straight_with_ace():
+    result = get_poker_description('AS 2H 3C 4S 5D')
+    assert result == 'Straight'
 
+def test_poker_straight_with_queen():
+    result = get_poker_description('9S 10H JH 8C QC')
+    assert result == 'Straight'
+
+def test_poker_straight_with_king():
+    result = get_poker_description('10H JH QC KD 9S')
+    assert result == 'Straight'
+
+def test_poker_straight_with_king_and_ace():
+    result = get_poker_description('10H JH QC KD AS')
+    assert result == 'Straight'
     
