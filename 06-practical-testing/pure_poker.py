@@ -33,15 +33,21 @@ def get_poker_description(user_input):
     rank_list = []
     for card in card_list:
         rank_list.append(card['rank'])
+
+    print(rank_list)
+
     for rank in rank_list:
         count_dict[rank] = rank_list.count(rank)
+    print(count_dict)
+
     if 4 in count_dict.values():
         return 'Four Of A Kind'
     elif 3 in count_dict.values() and 2 in count_dict.values():
         return 'Full House'
     elif 3 in count_dict.values():
         return 'Three Of A Kind'
-    else:
+    
+    elif 2 in count_dict.values():
         count = 0
         for v in count_dict.values():
             if v == 2:
@@ -50,6 +56,13 @@ def get_poker_description(user_input):
             return 'One Pair'
         elif count == 2:
             return 'Two Pair'
-        else:
-            return 'High Card'
+        
+    elif 1 in count_dict.values():
+        rank_list_numbers = [int(rank) for rank in rank_list if rank.isnumeric()]
+        rank_list_other = [rank for rank in rank_list if not rank.isnumeric()]
+        print(rank_list_numbers)
+        print(rank_list_other)
+        if sorted(rank_list_numbers) == sorted(list(range(min(rank_list_numbers), max(rank_list_numbers)+1))):
+            return 'Straight'
+        return 'High Card'
     

@@ -23,6 +23,10 @@ def test_poker_high_card():
     result = get_poker_description('5C 2D 7H AS 4C')
     assert result == 'High Card'
 
+def test_poker_high_card_mixed_numbers_others():
+    result = get_poker_description('KD 8C 10S 9S 7D')
+    assert result == 'High Card'
+
 def test_poker_one_pair():
     result = get_poker_description('AS 10S 5H 10C 6S')
     assert result == 'One Pair'
@@ -42,4 +46,18 @@ def test_poker_full_house():
 def test_poker_four_of_a_kind():
     result = get_poker_description('JC JD JS JC 5H')
     assert result == 'Four Of A Kind'
+
+def test_poker_straight_only_numbers():
+    result = get_poker_description('2H 3C 4S 5H 6D')
+    assert result == 'Straight'
+
+def test_poker_straight_mixed_numbers():
+    result = get_poker_description('6D 8C 10S 9S 7D')
+    assert result == 'Straight'
+
+def test_poker_straight_mixed_numbers_others():
+    result = get_poker_description('JD 8C 10S 9S 7D')
+    assert result == 'Straight'
+
+
     
