@@ -14,7 +14,6 @@ def test_poker_one_card():
     result = check_hand_is_valid('5H')
     assert result == "Sorry, that's invalid"
 
-
 def test_poker_invalid_card():
     result = check_hand_is_valid('5C 10D 7H AS 44C')
     assert result == "Sorry, that's invalid"
@@ -74,4 +73,12 @@ def test_poker_straight_with_king():
 def test_poker_straight_with_king_and_ace():
     result = get_poker_description('10H JH QC KD AS')
     assert result == 'Straight'
+    
+def test_poker_flush():
+    result = get_poker_description('4H 8H 2H 9H 7H')
+    assert result == 'Flush'
+    
+def test_poker_straight_flush():
+    result = get_poker_description('AC 2C 3C 4C 5C')
+    assert result == 'Straight Flush'
     
