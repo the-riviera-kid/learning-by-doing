@@ -21,6 +21,7 @@
 from pure_poker import check_hand_is_invalid
 from pure_poker import get_poker_data
 
+
 def main():
     invalid = True
     while invalid:

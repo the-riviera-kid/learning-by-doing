@@ -11,7 +11,9 @@
 
     You may have as many pure modules or test modules as you like
 '''
+
 from card import parse_card
+
 
 def check_hand_is_invalid(user_input):
     if user_input == None or user_input == '' or len(user_input.split()) != 5:
@@ -24,6 +26,7 @@ def check_hand_is_invalid(user_input):
                 return True
         return False
             
+
 def get_poker_data(user_input): # '10H JH QC KD AS'
     card_list = get_card_data(user_input)
     rank_list, suit_list, card = get_data(card_list)
@@ -88,6 +91,7 @@ def check_same_kinds(count_dict):
         poker_hand = check_count(count_dict)
         return poker_hand
 
+
 def check_count(count_dict):
     count = 0
     for v in count_dict.values():
@@ -110,14 +114,12 @@ def check_unique_card_hands(rank_list_numbers, suites):
 
 def check_straight(rank_list_numbers, rank_list_other):
     if sorted(rank_list_numbers) == sorted(list(range(min(rank_list_numbers), max(rank_list_numbers)+1))):
-        if len(rank_list_numbers) == 5:
-            return 'Straight'
-        elif len(rank_list_numbers) == 4 and 'jack' in rank_list_other or 'ace' in rank_list_other:
-            return 'Straight'
-        elif len(rank_list_numbers) == 3 and 'jack' in rank_list_other and 'queen' in rank_list_other:
-            return 'Straight'
-        elif len(rank_list_numbers) == 2 and 'jack' in rank_list_other and 'queen' in rank_list_other and 'king' in rank_list_other:
-            return 'Straight'
-        elif len(rank_list_numbers) == 1 and 'jack' in rank_list_other and 'queen' in rank_list_other and 'king' in rank_list_other and 'ace' in rank_list_other:
-            return 'Straight'
+        if len(rank_list_numbers) == 5 or \
+            len(rank_list_numbers) == 4 and 'jack' in rank_list_other or 'ace' in rank_list_other or \
+            len(rank_list_numbers) == 3 and 'jack' in rank_list_other and 'queen' in rank_list_other or \
+            len(rank_list_numbers) == 2 and 'jack' in rank_list_other and 'queen' in rank_list_other and \
+                'king' in rank_list_other or \
+            len(rank_list_numbers) == 1 and 'jack' in rank_list_other and 'queen' in rank_list_other and \
+                'king' in rank_list_other and 'ace' in rank_list_other:
+                return 'Straight'
         
