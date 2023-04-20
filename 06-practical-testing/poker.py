@@ -19,7 +19,7 @@
 '''
 
 from pure_poker import check_hand_is_invalid
-from pure_poker import get_poker_description
+from pure_poker import get_poker_data
 
 def main():
     invalid = True
@@ -30,7 +30,7 @@ def main():
             print("Sorry, that's invalid")
         else:
             invalid = False
-    poker_hand = get_poker_description(user_hand)
+    poker_hand = get_poker_data(user_hand)
     print(poker_hand)
 
 

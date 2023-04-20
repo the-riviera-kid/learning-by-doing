@@ -24,12 +24,16 @@ def check_hand_is_invalid(user_input):
                 return True
         return False
             
-def get_poker_description(user_input): # '10H JH QC KD AS'
+def get_poker_data(user_input): # '10H JH QC KD AS'
     card_list = get_card_data(user_input)
     rank_list, suit_list, card = get_data(card_list)
     count_dict = get_count_dict(rank_list)
     rank_list_numbers, rank_list_other, suites = get_rank_lists(suit_list, rank_list, card)
+    poker_hand = get_poker_description(count_dict, rank_list_numbers, suites, rank_list_other)
+    return poker_hand
 
+     
+def get_poker_description(count_dict, rank_list_numbers, suites, rank_list_other):
     poker_hand = check_same_kinds(count_dict)
     if poker_hand is not None:
         return poker_hand
@@ -96,6 +100,8 @@ def check_count(count_dict):
 
 
 def check_unique_card_hands(rank_list_numbers, suites):
+    if sorted(rank_list_numbers) == [10] and suites == 5:
+        return 'Royal Flush'
     if sorted(rank_list_numbers) == sorted(list(range(min(rank_list_numbers), max(rank_list_numbers)+1))) and suites == 5:
         return 'Straight Flush'
     elif suites == 5:
