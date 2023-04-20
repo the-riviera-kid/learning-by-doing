@@ -13,15 +13,15 @@
 '''
 from card import parse_card
 
-def check_hand_is_valid(user_input):
+def check_hand_is_invalid(user_input):
     if user_input == None or user_input == '' or len(user_input.split()) != 5:
-        return "Sorry, that's invalid"
+        return True
     else:
         for c in user_input.split():
             try:
                 parse_card(c)
             except ValueError:
-                return "Sorry, that's invalid"
+                return True
         return False
             
             
@@ -65,29 +65,34 @@ def check_ranks(count_dict, rank_list, suit_list, card):
     elif 2 in count_dict.values():
         poker_hand = check_count(count_dict)
         return poker_hand
-    
     elif 1 in count_dict.values():
-        rank_list_numbers = [int(rank) for rank in rank_list if rank.isnumeric()]
-        rank_list_other = [rank for rank in rank_list if not rank.isnumeric()]
-        suites = suit_list.count(card['suit'])
-        
-        if sorted(rank_list_numbers) == sorted(list(range(min(rank_list_numbers), max(rank_list_numbers)+1))) and suites == 5:
-            return 'Straight Flush'
-        elif suites == 5:
-            return 'Flush'
-        elif sorted(rank_list_numbers) == sorted(list(range(min(rank_list_numbers), max(rank_list_numbers)+1))):
-            if len(rank_list_numbers) == 5:
-                return 'Straight'
-            elif len(rank_list_numbers) == 4 and 'jack' in rank_list_other or 'ace' in rank_list_other:
-                return 'Straight'
-            elif len(rank_list_numbers) == 3 and 'jack' in rank_list_other and 'queen' in rank_list_other:
-                return 'Straight'
-            elif len(rank_list_numbers) == 2 and 'jack' in rank_list_other and 'queen' in rank_list_other and 'king' in rank_list_other:
-                return 'Straight'
-            elif len(rank_list_numbers) == 1 and 'jack' in rank_list_other and 'queen' in rank_list_other and 'king' in rank_list_other and 'ace' in rank_list_other:
-                return 'Straight'
-    
+        poker_hand = check_unique_card_hands(rank_list, suit_list, card)
+        if poker_hand is not None:
+            return poker_hand
     return 'High Card'
+
+
+def check_unique_card_hands(rank_list, suit_list, card):
+    rank_list_numbers = [int(rank) for rank in rank_list if rank.isnumeric()]
+    rank_list_other = [rank for rank in rank_list if not rank.isnumeric()]
+    suites = suit_list.count(card['suit'])
+    
+    if sorted(rank_list_numbers) == sorted(list(range(min(rank_list_numbers), max(rank_list_numbers)+1))) and suites == 5:
+        return 'Straight Flush'
+    elif suites == 5:
+        return 'Flush'
+    elif sorted(rank_list_numbers) == sorted(list(range(min(rank_list_numbers), max(rank_list_numbers)+1))):
+        if len(rank_list_numbers) == 5:
+            return 'Straight'
+        elif len(rank_list_numbers) == 4 and 'jack' in rank_list_other or 'ace' in rank_list_other:
+            return 'Straight'
+        elif len(rank_list_numbers) == 3 and 'jack' in rank_list_other and 'queen' in rank_list_other:
+            return 'Straight'
+        elif len(rank_list_numbers) == 2 and 'jack' in rank_list_other and 'queen' in rank_list_other and 'king' in rank_list_other:
+            return 'Straight'
+        elif len(rank_list_numbers) == 1 and 'jack' in rank_list_other and 'queen' in rank_list_other and 'king' in rank_list_other and 'ace' in rank_list_other:
+            return 'Straight'
+        
 
 def check_count(count_dict):
     count = 0

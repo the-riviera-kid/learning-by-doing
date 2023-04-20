@@ -18,16 +18,16 @@
     - imports of any modules other than pure_poker
 '''
 
-from pure_poker import check_hand_is_valid
+from pure_poker import check_hand_is_invalid
 from pure_poker import get_poker_description
 
 def main():
     invalid = True
     while invalid:
         user_hand = input('What is your poker hand? ')
-        invalid_hand = check_hand_is_valid(user_hand)
+        invalid_hand = check_hand_is_invalid(user_hand)
         if invalid_hand:
-            print(invalid_hand)
+            print("Sorry, that's invalid")
         else:
             invalid = False
     poker_hand = get_poker_description(user_hand)

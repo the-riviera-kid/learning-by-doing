@@ -1,22 +1,21 @@
-import pytest
-from pure_poker import check_hand_is_valid
+from pure_poker import check_hand_is_invalid
 from pure_poker import get_poker_description
 
 def test_poker_input_none():
-    result = check_hand_is_valid(None)
-    assert result == "Sorry, that's invalid"
+    result = check_hand_is_invalid(None)
+    assert result == True
 
 def test_poker_input_empty_string():
-    result = check_hand_is_valid('')
-    assert result == "Sorry, that's invalid"
+    result = check_hand_is_invalid('')
+    assert result == True
 
 def test_poker_one_card():
-    result = check_hand_is_valid('5H')
-    assert result == "Sorry, that's invalid"
+    result = check_hand_is_invalid('5H')
+    assert result == True
 
 def test_poker_invalid_card():
-    result = check_hand_is_valid('5C 10D 7H AS 44C')
-    assert result == "Sorry, that's invalid"
+    result = check_hand_is_invalid('5C 10D 7H AS 44C')
+    assert result == True
 
 def test_poker_high_card():
     result = get_poker_description('5C 2D 7H AS 4C')
