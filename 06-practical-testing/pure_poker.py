@@ -26,27 +26,26 @@ def check_hand_is_invalid(user_input):
                 return True
         return False
             
-
+# Separating the functions in order to call them from main() eventually
 def get_poker_data(user_input): # '10H JH QC KD AS'
+    count_dict, rank_list_numbers, suites, rank_list_other = get_poker_hand_stats(user_input)
+    poker_hand = get_poker_description(count_dict, rank_list_numbers, suites, rank_list_other)
+    return poker_hand
+
+
+def get_poker_hand_stats(user_input):
     card_list = get_card_data(user_input)
     rank_list, suit_list, card = get_data(card_list)
     count_dict = get_count_dict(rank_list)
     rank_list_numbers, rank_list_other, suites = get_rank_lists(suit_list, rank_list, card)
-    poker_hand = get_poker_description(count_dict, rank_list_numbers, suites, rank_list_other)
-    return poker_hand
+    return count_dict, rank_list_numbers, suites, rank_list_other
 
      
-def get_poker_description(count_dict, rank_list_numbers, suites, rank_list_other):
-    poker_hand = check_same_kinds(count_dict)
-    if poker_hand is not None:
-        return poker_hand
-    poker_hand = check_unique_card_hands(rank_list_numbers, suites)
-    if poker_hand is not None:
-        return poker_hand
-    poker_hand = check_straight(rank_list_numbers, rank_list_other)
-    if poker_hand is not None:
-        return poker_hand
-    return 'High Card'
+def get_poker_description(count_dict, rank_list_numbers, suites, rank_list_other):  
+    same_kinds = check_same_kinds(count_dict)
+    unique_card_hands = check_unique_card_hands(rank_list_numbers, suites)
+    straight = check_straight(rank_list_numbers, rank_list_other)
+    return same_kinds or unique_card_hands or straight or 'High Card'
 
 
 def get_card_data(user_input):

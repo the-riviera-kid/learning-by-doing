@@ -1,5 +1,6 @@
 from pure_poker import check_hand_is_invalid
 from pure_poker import get_poker_data
+from pure_poker import get_poker_description
 
 def test_poker_input_none():
     result = check_hand_is_invalid(None)
@@ -24,6 +25,12 @@ def test_poker_valid_card():
 def test_poker_high_card():
     result = get_poker_data('5C 2D 7H AS 4C')
     assert result == 'High Card'
+
+# Separating the function means more tests and slowly deprecating old tests
+def test_poker_high_card_description():
+    result = get_poker_description('....') # different input
+    assert result == '....' # different result
+
 
 def test_poker_high_card_mixed_numbers_others():
     result = get_poker_data('KD 8C 10S 9S 7D')
