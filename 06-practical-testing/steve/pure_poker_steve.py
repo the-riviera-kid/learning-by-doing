@@ -5,6 +5,7 @@ def description_poker_hand(user_input):                                         
     ranks_list = [i[:-1] for i in user_input.split()]                               # ranks_list = ['K', 'A', '2', '3', '4']
     return return_card_function(ranks_list, suits_list)
 
+
 def calculate_frequencies(ranks_list):
     frequency_ranks = {}
     for rank in ranks_list:
@@ -32,41 +33,42 @@ def return_card_function(ranks_list, suits_list):
               (check_for_high_card, 'High Card'))
     
     for check_function, value in checks:
-        if check_function(number_of_ranks, frequency_ranks, frequency_rank_values, suits_list, ranks, ranks_list):
+        if check_function(number_of_ranks, frequency_rank_values, suits_list, ranks, ranks_list):
             return_card = value
             break
     return return_card
 
-def check_for_full_house(number_of_ranks, frequency_ranks, frequency_rank_valuesp, suits_list, ranks, ranks_list):
+
+def check_for_full_house(number_of_ranks, frequency_rank_valuesp, suits_list, ranks, ranks_list):
     frequencies = calculate_frequencies(ranks_list)
     frequency_rank_values = frequencies.values()
     return len(frequencies) == 2 and 3 in frequency_rank_values and 2 in frequency_rank_values
 
-def check_for_four_of_a_kind(number_of_ranks, frequency_ranks, frequency_rank_values, suits_list, ranks, ranks_list):
+def check_for_four_of_a_kind(number_of_ranks, frequency_rank_values, suits_list, ranks, ranks_list):
     return number_of_ranks == 2 and 4 in frequency_rank_values
 
-def check_for_three_of_a_kind(number_of_ranks, frequency_ranks, frequency_rank_values, suits_list, ranks, ranks_list):
+def check_for_three_of_a_kind(number_of_ranks, frequency_rank_values, suits_list, ranks, ranks_list):
     return number_of_ranks == 3 and 3 in frequency_rank_values
 
-def check_for_two_pair(number_of_ranks, frequency_ranks, frequency_rank_values, suits_list, ranks, ranks_list):
+def check_for_two_pair(number_of_ranks, frequency_rank_values, suits_list, ranks, ranks_list):
     frequencies = calculate_frequencies(ranks_list)
     return len(frequencies) == 3
 
-def check_for_one_pair(number_of_ranks, frequency_ranks, frequency_rank_values, suits_list, ranks, ranks_list):
+def check_for_one_pair(number_of_ranks, frequency_rank_values, suits_list, ranks, ranks_list):
     frequencies = calculate_frequencies(ranks_list)
     return len(frequencies) == 4
 
-def check_for_royal_flush(number_of_ranks, frequency_ranks, frequency_rank_values, suits_list, ranks, ranks_list):
+def check_for_royal_flush(number_of_ranks, frequency_rank_values, suits_list, ranks, ranks_list):
     return number_of_ranks == 5 and ranks == [10] and all([suits_list[i] == suits_list[i+1] for i in range(len(suits_list)-1)])
 
-def check_for_straight_flush(number_of_ranks, frequency_ranks, frequency_rank_values, suits_list, ranks, ranks_list):
+def check_for_straight_flush(number_of_ranks, frequency_rank_values, suits_list, ranks, ranks_list):
     return number_of_ranks == 5 and sorted(ranks) == list(range(min(ranks), max(ranks)+1)) and all([suits_list[i] == suits_list[i+1] for i in range(len(suits_list)-1)])
 
-def check_for_straight(number_of_ranks, frequency_ranks, frequency_rank_values, suits_list, ranks, ranks_list):                 # ranks = [2, 3, 4]
+def check_for_straight(number_of_ranks, frequency_rank_values, suits_list, ranks, ranks_list):                 # ranks = [2, 3, 4]
     return number_of_ranks == 5 and sorted(ranks) == list(range(min(ranks), max(ranks)+1)) and len(ranks) > 3 or ranks == [10]  # 'KH AH 2C 3D 4S'
 
-def check_for_flush(number_of_ranks, frequency_ranks, frequency_rank_values, suits_list, ranks, ranks_list):
+def check_for_flush(number_of_ranks, frequency_rank_values, suits_list, ranks, ranks_list):
     return all([suits_list[i] == suits_list[i+1] for i in range(len(suits_list)-1)])
 
-def check_for_high_card(number_of_ranks, frequency_ranks, frequency_rank_values, suits_list, ranks, ranks_list):
+def check_for_high_card(number_of_ranks, frequency_rank_values, suits_list, ranks, ranks_list):
     return True
