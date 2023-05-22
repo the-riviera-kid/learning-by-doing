@@ -18,6 +18,11 @@ def test_input_invalid_list():
 def test_input_invalid_not_seven_cards():
     compare_input_with_expected_output('2H 3D 4S 5H 4H JC')
 
+def test_input_invalid_potato():
+    compare_input_with_expected_output('potatopotato')
+
+def test_input_invalid_seven_cards():
+    compare_input_with_expected_output('AH 2H 3H 4B 5H 6H 7H')
 
 def compare_input_with_expected_output(user_input, output=INVALID):
     result = rummy(user_input)

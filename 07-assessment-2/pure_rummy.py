@@ -1,9 +1,12 @@
-from cards.pure_cards import parse_card
+from cards.pure_cards import check_for_invalid
 
 def rummy(user_input):
     invalid = check_valid(user_input)
     if invalid is not None:
         return invalid
+    else:
+        rummy = check_rummy(user_input)
+        return rummy
 
 
 def check_valid(user_input):
@@ -11,4 +14,10 @@ def check_valid(user_input):
         return 'Sorry, that is invalid'
     else:
         for card in user_input.split():
-            parse_card(card)
+            check_invalid = check_for_invalid(card)
+            if check_invalid is not None:
+                return check_invalid
+
+
+def check_rummy(user_input):
+    pass
