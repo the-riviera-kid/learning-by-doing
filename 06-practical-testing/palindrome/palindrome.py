@@ -1,18 +1,11 @@
-from pure_palindrome import check_if_invalid
-from pure_palindrome import clean_user_input
-from pure_palindrome import check_for_palindrome
-
+from pure_palindrome import is_palindrome
 
 def main():
-    user_input = input('Type your palindrome: ')
-    is_invalid = check_if_invalid(user_input)
-    if is_invalid is not None:
-        print(is_invalid)
+    user_input = input("Please enter a word: ")
     
-    cleaned_input = clean_user_input(user_input)
-    
-    palindrome = check_for_palindrome(cleaned_input)
-    print(palindrome)
+    message = is_palindrome(user_input)
+
+    print(message)
 
 if __name__ == '__main__':
     main()
