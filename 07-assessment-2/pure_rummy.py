@@ -20,4 +20,4 @@ def check_valid(user_input):
 
 
 def check_rummy(user_input):
-    pass
+    return 'LOSE'
