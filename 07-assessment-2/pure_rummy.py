@@ -5,8 +5,7 @@ def rummy(user_input):
     if invalid is not None:
         return invalid
     else:
-        rummy = check_rummy(user_input)
-        return rummy
+        return check_rummy()
 
 
 def check_valid(user_input):
@@ -19,5 +18,19 @@ def check_valid(user_input):
                 return check_invalid
 
 
-def check_rummy(user_input):
-    return 'LOSE'
+def check_rummy():
+    game_status = None
+    checks = (
+        (check_for_lose, 'Sorry, you lose'),
+    )
+
+    for check_function, message in checks:
+        if check_function():
+            game_status = message
+            break
+
+    return game_status
+
+
+def check_for_lose():
+    return True
