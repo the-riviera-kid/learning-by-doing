@@ -1,14 +1,19 @@
 from pure_rummy import rummy
 
 
+INVALID = 'Sorry, that is invalid'
+
 def test_input_invalid_none():
-    result =  rummy(None)
-    assert result == 'Sorry, that is invalid'
+    compare_input_with_expected_output(None)
 
 def test_input_invalid_empty_string():
-    result =  rummy('')
-    assert result == 'Sorry, that is invalid'
+    compare_input_with_expected_output('')
+
 
 def test_input_invalid_integer():
-    result =  rummy(5)
-    assert result == 'Sorry, that is invalid'
+    compare_input_with_expected_output(5)
+
+
+def compare_input_with_expected_output(user_input, output=INVALID):
+    result = rummy(user_input)
+    assert result == output
