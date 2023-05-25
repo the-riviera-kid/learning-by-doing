@@ -30,11 +30,17 @@ def test_for_3_of_a_kind():
 def test_for_4_of_a_kind():
     compare_input_with_expected_output('2S 3C 4H 5D 6D 7D 8D', 'You Win!')
 
+def test_for_3_of_a_kind_with_lettered_ranks():
+    compare_input_with_expected_output('JH QH KH 5C 6D 7S 8D', 'You Win!')
+
+# def test_for_4_of_a_kind_with_lettered_ranks():
+#     compare_input_with_expected_output('2S 3C 4H 9D 10D JD QD', 'You Win!')
+
 def test_input_valid_cards_lose():
     compare_input_with_expected_output('3C 3D 3H 3S 4S 5C 6S', 'Sorry, you lose')
 
-# def test_input_valid_cards_lose_v2():
-#     compare_input_with_expected_output('QC KC AC AS 2S 3S 4S', 'Sorry, you lose')
+def test_input_valid_cards_lose_v2():
+    compare_input_with_expected_output('QC KC AC AS 2S 3S 4S', 'Sorry, you lose')
 
 def compare_input_with_expected_output(user_input, output=INVALID):
     result = rummy(user_input)
