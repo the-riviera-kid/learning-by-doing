@@ -1,58 +1,39 @@
-# from cards.pure_cards import check_for_invalid
+'''
+For this assessment, we'll be scoring card hands again, but this time for Rummy!
+In Rummy, the objective is to build a hand of seven cards, containing any two of the following patterns:
 
+    three of a kind: three of any rank.
+    four of a kind: four of any rank.
+    straight three: a straight of three adjacent cards of the same suit.
+    straight four: a straight of four adjacent cards of the same suit.
 
-# def rummy(user_input):
-#     invalid = check_valid(user_input)
-#     if invalid is not None:
-#         return invalid
-#     else:
-#         ranks_list = [int(i[:-1]) if i[:-1].isnumeric() else i[:-1] for i in user_input.split()]
-#         suits_list = [i[-1] for i in user_input.split()]
-#         return check_rummy(ranks_list, suits_list)
+If we're aiming for a hand of seven cards, then we need one pattern of three, and one pattern of four. 
+You can have two of the same sort of pattern; three Jacks and four sixes is a valid hand, for instance. 
+In Rummy, aces are always low; AS 2S 3S is a valid straight, but QS KS AS is not.
 
+There's no relative ranking of hands in Rummy like in poker; the first player to get a winning hand wins!
 
-# def check_valid(user_input):
-#     if user_input == '' or not isinstance(user_input, str) or len(user_input.split()) != 7:
-#         return 'Sorry, that is invalid'
-#     else:
-#         for card in user_input.split():
-#             check_invalid = check_for_invalid(card)
-#             if check_invalid is not None:
-#                 return check_invalid
+Examples:
 
+    AC AS 5C 8C 6C 7C AH: WIN a straight (continuous sequence) four and three of a kind(3 of one rank - AC AS AH). Note that I haven't written the cards down in order, but it still counts.
+    AH 2H 3H 4H 5H 6H 7H: WIN A straight four and a straight three. It doesn't matter which patter contains the 4H, it's valid either way. Notice that two straights are a winning hand; it doesn't have to be 3/4 of a kind and a straight.
+    10H 9H 8H 7H 7C 7S 7D: WIN this is ambiguous, it could be a straight three and four of a kind, or it could be a straight four and three of a kind. Either way, this is a winning hand.
+    QC KC AC AS 2S 3S 4S: LOSE Aces are low, so A, 2, 3, 4 is a straight, but Q, K, A is not.
+    3C 3D 3H 3S 4S 5C 6S: LOSE Straights have to be all the same suit. This is just a four of a kind.
+    AH 2H 3H 4H 5H 6H 7H 8H: INVALID Valid hands only have seven cards.
+    AH 2H 3H 4B 5H 6H 7H: INVALID 'B' is not a valid suit.
+    potatopotato: INVALID It may surprise you that a potato is not a real playing card.
 
-# def check_rummy(ranks_list, suits_list):
-#     game_status = 'Sorry, you lose'
-#     frequency_ranks = calculate_frequencies(ranks_list)
-#     number_ranks = [rank for rank in ranks_list if isinstance(rank, int)]
-#     checks = (
-#         (check_for_3_of_a_kind),
-#         (check_for_4_of_a_kind),
-#     )
+Challenge:
+Your task is to write a program which prompts the user for a string representing a Rummy hand, and prints "WIN", "LOSE" or "INVALID" in response. 
+You are allowed to copy over your card.py module from a previous exercise, should you choose.
 
-#     two_wins = [True for check_function in checks if check_function(ranks_list, number_ranks, suits_list, frequency_ranks)]
-#     if len(two_wins) >= 2:
-#         game_status = 'You Win!'
-#     return game_status
+Write tests for as much of your program as possible. The best way to do this is to separate input and output from the processing. 
+Remember to check for invalid hands as well as winning and losing hands.
 
-
-# def calculate_frequencies(ranks_list): # ranks_list = ['3', '5', '6', '9', '2', '4', '7']
-#     frequency_ranks = {}
-#     for rank in ranks_list:
-#         if rank not in frequency_ranks:
-#             frequency_ranks[rank] = 0 # frequency_ranks = {'3': 0, '5': 0, '6': 0, '9': 0, '2': 0, '4': 0, '7': 0}
-#         frequency_ranks[rank] += 1 # frequency_ranks = {'3': 1, '5': 1, '6': 1, '9': 1, '2': 1, '4': 1, '7': 1}         
-#     return frequency_ranks
-
-
-# def check_for_3_of_a_kind(ranks_list, number_ranks, suits_list, frequency_ranks):
-#     return len([rank for rank in number_ranks if sorted(number_ranks) == list(range(min(number_ranks), max(number_ranks)+1))]) >= 3 and all([suits_list[i] == suits_list[i+1] for i in range(len(suits_list)-1)])
-
-
-# def check_for_4_of_a_kind(ranks_list, number_ranks, suits_list, frequency_ranks):
-#     return len([rank for rank in number_ranks if sorted(number_ranks) == list(range(min(number_ranks), max(number_ranks)+1))]) >= 4
-
-
+This is an assessment, so you will be working individually. 
+Once you're done, make sure your project is committed, and pushed to Github.
+'''
 
 from cards.pure_cards import check_for_invalid
 
@@ -63,8 +44,6 @@ def rummy(user_input):
         return invalid
     else:
         card_list = user_input.split()
-        ranks_list = [int(i[:-1]) if i[:-1].isnumeric() else i[:-1] for i in user_input.split()]
-        suits_list = [i[-1] for i in user_input.split()]
         return check_rummy(card_list)
 
 
@@ -78,33 +57,32 @@ def check_valid(user_input):
                 return check_invalid
 
 
-def check_rummy(card_list): # ['2H', '3H', '4H', '5C', '6D', '7S', '8D']
-    game_status = 'Sorry, you lose'
-    # number_ranks = [rank for rank in ranks_list if isinstance(rank, int)]
-    checks = (
-        (check_for_3_of_a_kind),
-        (check_for_4_of_a_kind),
-    )
-
-    two_wins = [True for check_function in checks if check_function(card_list)]
-    if len(two_wins) >= 2:
-        game_status = 'You Win!'
-    return game_status
+def check_rummy(card_list):
+    win_or_lose = 'LOSE'
+    frequencies = calculate_frequencies(card_list)
+    if check_for_3_of_a_kind(frequencies) and check_for_straight_4(frequencies):
+        return 'WIN'
+    return win_or_lose
 
 
-def check_for_3_of_a_kind(card_list):
-    list_1 = [card_list[card] for card in range(len(card_list)-1) if card_list[card][-1] == card_list[card+1][-1]] # ['2H', '3H', '4H']
-    print(list_1)
-    ranks_list = [int(i[:-1]) if i[:-1].isnumeric() else i[:-1] for i in list_1] # [2, 3, 4]
-    print(ranks_list)
-    number_ranks = [rank for rank in ranks_list if isinstance(rank, int)]
-    return len([rank for rank in number_ranks if sorted(number_ranks) == list(range(min(number_ranks), max(number_ranks)+1))]) >= 3
+def calculate_frequencies(card_list): # AC AS 5C 8C 6C 7C AH
+    frequencies = {}
+    for card in card_list: # card_list = ['AC', 'AS', '5C', '8C', '6C', '7C', 'AH']
+        rank = card[:-1]
+        suit = card[-1]
+        if rank in frequencies:
+            frequencies[rank].append(suit)
+        else:
+            frequencies[rank] = [suit]
+    return frequencies
 
 
-def check_for_4_of_a_kind(card_list):
-    list_1 = [card_list[card] for card in range(len(card_list)-1) if card_list[card][-1] == card_list[card+1][-1]] # ['2H', '3H', '4H']
-    print(list_1)
-    ranks_list = [int(i[:-1]) if i[:-1].isnumeric() else i[:-1] for i in list_1] # [2, 3, 4]
-    print(ranks_list)
-    number_ranks = [rank for rank in ranks_list if isinstance(rank, int)]
-    return len([rank for rank in number_ranks if sorted(number_ranks) == list(range(min(number_ranks), max(number_ranks)+1))]) >= 4
+def check_for_3_of_a_kind(frequencies):
+    for suits in frequencies.values():
+        return len(suits) == 3
+
+
+def check_for_straight_4(frequencies): # {'A': ['C', 'S', 'H'], '5': ['C'], '8': ['C'], '6': ['C'], '7': ['C']}
+    ranks_list = [int(rank) for rank, suits in frequencies.items() if not frequencies[rank] == type(int) and len(suits) == 1] # ranks_list = [5, 8, 6, 7]
+    suits_list = [suits[0] for suits in frequencies.values() if len(suits) == 1] # suits_list = ['C', 'C', 'C', 'C']
+    return sorted(ranks_list) == list(range(min(ranks_list), max(ranks_list)+1)) and all([suits_list[i] == suits_list[i+1] for i in range(len(suits_list)-1)])
