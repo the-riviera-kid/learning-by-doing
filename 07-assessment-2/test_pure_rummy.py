@@ -30,6 +30,27 @@ def test_input_valid_LOSE():
 def test_input_valid_WIN_straight_4_and_3_of_a_kind():
     compare_input_with_expected_output('AC AS 5C 8C 6C 7C AH', 'WIN')
 
+def test_input_valid_WIN_straight_4_and_3_of_a_kind_letter_ranks():
+    compare_input_with_expected_output('AC AS 8C 9C JC 10C AH', 'WIN')
+
+def test_input_valid_WIN_straight_4_and_3_of_a_kind_letter_ranks_no_numbers():
+    compare_input_with_expected_output('AC AS AD QC KC JC 10C', 'WIN')
+
+def test_input_valid_WIN_straight_4_and_3_of_a_kind_letter_ranks_numbers_for_same_kind():
+    compare_input_with_expected_output('2C 2S 2D QC KC JC 10C', 'WIN')
+
+def test_input_valid_WIN_straight_3_and_4_of_a_kind():
+    compare_input_with_expected_output('AC AS AD 8C 6C 7C AH', 'WIN')
+
+def test_input_valid_WIN_straight_3_and_4_of_a_kind_letter_ranks():
+    compare_input_with_expected_output('AC AS AD 9C JC 10C AH', 'WIN')
+
+def test_input_valid_WIN_straight_3_and_4_of_a_kind_letter_ranks_no_numbers():
+    compare_input_with_expected_output('AC AS AD QC KC JC AH', 'WIN')
+
+def test_input_valid_WIN_straight_3_and_4_of_a_kind_letter_ranks_numbers_for_same_kind():
+    compare_input_with_expected_output('2C 2S 2D QC KC JC 2H', 'WIN')
+
 def compare_input_with_expected_output(user_input, output=INVALID):
     result = rummy(user_input)
     assert result == output

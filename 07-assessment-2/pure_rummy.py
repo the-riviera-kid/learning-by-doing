@@ -62,12 +62,14 @@ def check_rummy(card_list):
     frequencies = calculate_frequencies(card_list)
     if check_for_3_of_a_kind(frequencies) and check_for_straight_4(frequencies):
         return 'WIN'
+    elif check_for_4_of_a_kind(frequencies) and check_for_straight_3(frequencies):
+        return 'WIN'
     return win_or_lose
 
 
-def calculate_frequencies(card_list): # AC AS 5C 8C 6C 7C AH
+def calculate_frequencies(card_list): # AC AS 8C 9C JC 10C AH
     frequencies = {}
-    for card in card_list: # card_list = ['AC', 'AS', '5C', '8C', '6C', '7C', 'AH']
+    for card in card_list: # card_list = ['AC', 'AS', '8C', '9C', 'JC', '10C', 'AH']
         rank = card[:-1]
         suit = card[-1]
         if rank in frequencies:
@@ -81,8 +83,29 @@ def check_for_3_of_a_kind(frequencies):
     for suits in frequencies.values():
         return len(suits) == 3
 
+def check_for_4_of_a_kind(frequencies):
+    for suits in frequencies.values():
+        return len(suits) == 4
 
-def check_for_straight_4(frequencies): # {'A': ['C', 'S', 'H'], '5': ['C'], '8': ['C'], '6': ['C'], '7': ['C']}
-    ranks_list = [int(rank) for rank, suits in frequencies.items() if not frequencies[rank] == type(int) and len(suits) == 1] # ranks_list = [5, 8, 6, 7]
+
+def check_for_straight_4(frequencies): # {'A': ['C', 'S', 'H'], '8': ['C'], '9': ['C'], 'J': ['C'], '10': ['C']}
+    ranks_list = [int(rank) for rank, suits in frequencies.items() if rank.isnumeric() if len(suits) == 1] # ranks_list = [8, 9, 10]
+    ranks_list_letters = [rank for rank, suits in frequencies.items() if rank.isalpha() if len(suits) == 1] # ranks_list = ['J']
     suits_list = [suits[0] for suits in frequencies.values() if len(suits) == 1] # suits_list = ['C', 'C', 'C', 'C']
-    return sorted(ranks_list) == list(range(min(ranks_list), max(ranks_list)+1)) and all([suits_list[i] == suits_list[i+1] for i in range(len(suits_list)-1)])
+    if len(ranks_list) == 4 or \
+       len(ranks_list) == 3 and 'J' in ranks_list_letters or \
+       len(ranks_list) == 2 and 'J' in ranks_list_letters and 'Q' in ranks_list_letters or \
+       len(ranks_list) == 1 and len(ranks_list_letters) == 3:
+        return sorted(ranks_list) == list(range(min(ranks_list), max(ranks_list)+1)) and all([suits_list[i] == suits_list[i+1] for i in range(len(suits_list)-1)])
+
+
+def check_for_straight_3(frequencies):
+    ranks_list = [int(rank) for rank, suits in frequencies.items() if rank.isnumeric() if len(suits) == 1]
+    ranks_list_letters = [rank for rank, suits in frequencies.items() if rank.isalpha() if len(suits) == 1]
+    suits_list = [suits[0] for suits in frequencies.values() if len(suits) == 1]
+    if len(ranks_list) == 3 or \
+       len(ranks_list) == 2 and 'J' in ranks_list_letters or \
+       len(ranks_list) == 1 and 'J' in ranks_list_letters and 'Q' in ranks_list_letters:
+        return sorted(ranks_list) == list(range(min(ranks_list), max(ranks_list)+1)) and all([suits_list[i] == suits_list[i+1] for i in range(len(suits_list)-1)])
+    return len(ranks_list) == 0 and 'J' in ranks_list_letters and 'Q' in ranks_list_letters and 'K' in ranks_list_letters or \
+         len(ranks_list) == 0 and 'Q' in ranks_list_letters and 'K' in ranks_list_letters and 'A' in ranks_list_letters
