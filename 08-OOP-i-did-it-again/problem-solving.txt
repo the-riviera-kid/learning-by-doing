@@ -1,0 +1,125 @@
+Rewatch previous lessons if you need to, especially the stuff about how to break down problems and instructions.
+Start by working out which parts are probably going to be classes. 
+Remember, nouns tend to become classes, adjectives and information tend to be properties, and verbs become methods. 
+When you think 'I need something in my program to do this', think carefully about where that thing should go.
+
+Your Mission
+Using our shorthand for cards last week, a poker hand of five cards might look like this: "4H QH 4D 2S 10C". 
+That tells us the rank and suit of the five cards in the hand. 
+Then we can use the following table to determine the value and name of the hand. 
+These values are arranged in increasing order; High Card is the lowest, Royal Flush is the highest.
+
+High Card
+There's no pattern to the cards at all. Eg: "AS 10S 5H 7C 6S".
+
+One Pair
+This hand has one pair of rank cards. Eg: "AS 10S 5H 10C 6S". There are two tens in this hand, so we have one pair.
+
+Two Pair
+This is a hand with two pairs of ranked cards. Eg: "3H 8C 8H 9S 3D"
+
+Three Of A Kind
+Three of one rank of card. Eg: "6S 6H 7C JD 6D". There are three sixes, so we have three of a kind.
+
+Straight
+This is where all five cards form a continuous sequence. Eg: "2H 3C 4S 5H 6D", or "JD 8C 10S 9S 7D". 
+In this scenario, an Ace can be low ("AS 2H 3C 4S 5D") or high ("10H JH QC KD AS") but not both at the same time.
+
+Flush
+All the cards are of the same suit, regardless of the rank. Eg: "4H 8H 2H 9H 7H"
+
+Full House
+A Three Of A Kind and One Pair in the same hand. Eg: "4H 4D 4C 8S 8D"
+
+Four Of A Kind
+Four of any rank. Eg: "JC JD JS JC 5H"
+
+Straight Flush
+It's a Straight and a Flush at the same time; five adjacent cards of the same suit. Eg: "AC 2C 3C 4C 5C"
+
+Royal Flush
+A Straight Flush that goes from ten to ace. Eg: "10S JS QS KS AS". The highest ranking hand in the game.
+
+What Are We Doing Exactly?
+Write a program which allows the user to enter two shorthand strings. 
+Those strings each represent a hand of cards. Each card has a rank and suit, and the normal restrictions apply there. 
+Each hand should contain exactly five cards. The first string contains the cards for Player 1, and the second string contains the cards for Player 2.
+
+Your program should print which player wins the round, and why. So, an example run of the program might look like this:
+    > Enter Player 1's cards: 10H 10C 4H 4S 10S
+    > Enter Player 2's cards: AH 3H 2H 5H 4H
+    > Player 2 wins!
+    > A Straight Flush beats A Full House!
+
+If the hands are the same, then the highest relevant card wins. 
+Note in the next example, that although Player 2 has the highest card, Player 1 still wins; their pair of 10s beats the pair of 3s. 
+Player 2's king isn't part of the hand, so it doesn't affect the result.
+    > Enter Player 1's cards: 10H 10C 4H 5S 7S
+    > Enter Player 2's cards: 3S 3H 2H 5H KH
+    > Player 1 wins!
+    > One Pair (10) beats One Pair (3)!
+
+You will of course have to write tests for as much of your program as possible. 
+The restrictions might seem very harsh, but they're there to push you in the right direction. 
+
+Restrictions
+Your program should be split up into at least three separate modules.
+
+Your other modules should contain one class definition each. Those modules may include each other.
+
+Your modules containing classes cannot at any point during development contain the following statements or functions:
+    print
+    input
+    open
+
+Your classes must not directly alter properties of other classes. my_object.increase_score() is fine, but my_object.score += 1 is not.
+
+main.py should be as simple as possible. Most of your program's logic should be in the classes.
+
+You should have one test module per class module.
+
+======================================================================================
+
+main.py
+input:
+    - Enter Player 1's cards: 10H 10C 4H 4S 10S
+    - Enter Player 2's cards: AH 3H 2H 5H 4H
+
+output: 
+    - 'Sorry, that is invalid'
+    - 'Player 2 wins!'
+    - 'A Straight Flush beats A Full House!
+
+
+3 classes, properties, methods:
+
+- class Card
+    Properties:
+    - rank
+    - suit
+        Methods:
+        - checks that each card is valid
+
+- class PokerHand
+    Properties:
+    - 5 cards
+        Method:
+        - splits hand into 5 cards - checks it can be split into 5 and each card is a length of 2 or 3.
+    - hand = ''
+        Methods:
+        - High Card - "AS 10S 5H 7C 6S"
+        - One Pair
+        - Two Pair
+        - Three Of A Kind
+        - Straight
+        - Flush
+        - Full House
+        - Four Of A Kind
+        - Straight Flush
+        - Royal Flush
+
+- class Winner:
+    Properties:
+    - 2 PokerHands
+        Methods:
+        - compare 2 PokerHands - return a winner
