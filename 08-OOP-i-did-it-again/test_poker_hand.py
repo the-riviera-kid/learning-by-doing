@@ -31,3 +31,7 @@ def test_invalid_cards():
 def test_high_card():
     hand = PokerHand('AS 10S 5H 7C 6S').get_hand_name()
     assert hand == 'High Card'
+
+def test_high_card():
+    hand = PokerHand('AS 10S 5H 10C 6S').get_hand_name()
+    assert hand == 'One Pair'
