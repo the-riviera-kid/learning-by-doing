@@ -42,5 +42,11 @@ def test_compare_ranks():
 def test_rank_greater_than_other():
     assert Rank('K') > Rank('Q')
 
+def test_rank_greater_than_other_with_ace():
+    assert Rank('A') > Rank('K')
+
 def test_rank_less_than_other():
     assert Rank('8') < Rank('9')
+
+def test_rank_less_than_other_with_ace():
+    assert Rank('A') < Rank('2')
