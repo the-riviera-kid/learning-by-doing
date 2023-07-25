@@ -30,27 +30,20 @@ Class Kelvin
 # def avg_temp(temps):
 #     return sum(temps, Celcius(0))/len(temps)
 
-class Celcius:
-    def __init__(self, temp):
-        self.temp = temp
 
-    def __eq__(self, other):
-        return self.temp == other._to_celcius().temp
-    
-    def __add__(self, other):
-        return Celcius(self.temp + other.temp)
-    
-    def _to_celcius(self):
-        return self
-    
+class Kelvin:
+    def __init__(self, temp): # self == Kelvin, temp == int
+        self.temp = temp # self.temp == int
+        # returns None
 
-class Fahrenheit:
-    def __init__(self, temp):
-        self.temp = temp
-
-    def __eq__(self, other):
-        return self._to_celcius() == other._to_celcius()
+    def __eq__(self, other): # self == Kelvin, other == Kelvin
+        return self.temp == other.temp # self.temp == int, other.temp == int
+        # returns True or False        # int(50) == int(50)
     
-    def _to_celcius(self):
-        celcius_value = (self.temp - 32)/1.8
-        return Celcius(celcius_value)
+    def __add__(self, other): # self == Kelvin, other == Kelvin
+        return Kelvin(self.temp + other.temp) # self.temp == int, other.temp == int
+        # returns int -> int(50) -> Kelvin(50)
+
+    def __floordiv__(self, divisor):
+        return Kelvin(self.temp // divisor)
+    
