@@ -64,10 +64,27 @@ def test_straight_4_cards():
     hand = PokerHand('2H 3C 4S 5H 5C').get_hand_name()
     assert hand == 'One Pair'
 
+def test_straight_letters():
+    hand = PokerHand('JD 8C 10S 9S 7D').get_hand_name()
+    assert hand == 'Straight'
+
+def test_straight_ace_low():
+    hand = PokerHand('AS 2H 3C 4S 5D').get_hand_name()
+    assert hand == 'Straight'
+
+def test_straight_ace_high():
+    hand = PokerHand('10H JH QC KD AS').get_hand_name()
+    assert hand == 'Straight'
+
+def test_flush():
+    hand = PokerHand('4H 8H 2H 9H 7H').get_hand_name()
+    assert hand == 'Flush'
+
+def test_straight_flush():
+    hand = PokerHand('AC 2C 3C 4C 5C').get_hand_name()
+    assert hand == 'Straight Flush'
+
 '''
-Straight
-All five cards form a continuous sequence
-"2H 3C 4S 5H 6D", or "JD 8C 10S 9S 7D"
-An Ace can be low ("AS 2H 3C 4S 5D") or high ("10H JH QC KD AS")
-but not both at the same time.
+It's a Straight and a Flush at the same time; five adjacent cards of the same suit. 
+e.g. "AC 2C 3C 4C 5C"
 '''

@@ -9,6 +9,7 @@ class PokerHand:
         # a list of 5 Card objects
         self._ranks = [card._rank for card in self._hand] # ['3', '8', '8', '9', '3'] -> ['3', '8', '9']
         self._rank_counts = {r:self._ranks.count(r) for r in self._ranks}
+        self._suits = [card._suit for card in self._hand]
 
     def _is_hand_valid(self, hand):
         if not isinstance(hand, str) or hand == '' or \
@@ -23,6 +24,7 @@ class PokerHand:
                   (self._check_three_of_a_kind, 'Three Of A Kind'),
                   (self._check_two_pair, 'Two Pair'),
                   (self._check_straight, 'Straight'),
+                  (self._check_flush, 'Flush'),
                   (self._check_high_card, 'High Card'),)
         
         for check, hand in CHECKS:
@@ -47,6 +49,20 @@ class PokerHand:
         return len(set(self._ranks)) == 3
     
     def _check_straight(self):
+        if sorted(self._ranks) == ['2', '3', '4', '5', 'A']:
+            return True
+        sorted_cards = sorted(self._hand)
+        for i in range(len(sorted_cards)-1):
+            if sorted_cards[i+1] - sorted_cards[i] != 1:
+                return False
+        return True
+    
+    def _check_flush(self):
+        return len(set(self._suits)) == 1
+    
+    def _check_straight_flush(self):
+        if sorted(self._ranks) == ['2', '3', '4', '5', 'A'] and len(set(self._suits)) == 1:
+            return True
         sorted_cards = sorted(self._hand)
         for i in range(len(sorted_cards)-1):
             if sorted_cards[i+1] - sorted_cards[i] != 1:
