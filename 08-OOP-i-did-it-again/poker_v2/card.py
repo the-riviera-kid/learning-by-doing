@@ -16,6 +16,3 @@ class Card:
     
     def __gt__(self, other: object) -> bool:
         return self.rank > other.rank
-        
-    def __lt__(self, other: object) -> bool:
-        return self.rank < other.rank

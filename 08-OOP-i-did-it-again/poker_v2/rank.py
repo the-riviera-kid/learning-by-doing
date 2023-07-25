@@ -11,7 +11,7 @@ class Rank:
         return rank
     
     def __eq__(self, other: object) -> bool:
-        return self.rank == other
+        return self.rank == other.rank
     
     def __gt__(self, other: object) -> bool:
         return self.RANKS.index(self.rank) > self.RANKS.index(other.rank)
@@ -20,3 +20,7 @@ class Rank:
         if other.rank == '2':
             self.RANKS.insert(0, 'A')
         return self.RANKS.index(self.rank) < self.RANKS.index(other.rank)
+
+    def __hash__(self) -> int:
+        return self.rank.__hash__()
+    

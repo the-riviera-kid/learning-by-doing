@@ -10,4 +10,4 @@ class Suit:
         return suit
     
     def __eq__(self, other: object) -> bool:
-        return self.suit == other
+        return self.suit == other.suit
