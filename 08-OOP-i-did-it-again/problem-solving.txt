@@ -118,8 +118,4 @@ output:
         - Straight Flush
         - Royal Flush
 
-- class Winner:
-    Properties:
-    - 2 PokerHands
-        Methods:
         - compare 2 PokerHands - return a winner
