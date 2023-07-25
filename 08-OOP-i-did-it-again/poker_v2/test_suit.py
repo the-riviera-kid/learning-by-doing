@@ -4,29 +4,31 @@ import pytest
 def test_suit_exits():
     assert Suit
 
-def test_invalid_suit_none():
+def check_type_errors(user_input):
     with pytest.raises(TypeError):
-        Suit(None)
+        Suit(user_input)
 
-def test_invalid_suit_empty_string():
-    with pytest.raises(ValueError):
-        Suit('')
-
-def test_invalid_suit_f():
-    with pytest.raises(ValueError):
-        Suit('f')
+def test_invalid_suit_none():
+    check_type_errors(None)
 
 def test_invalid_suit_list():
-    with pytest.raises(TypeError):
-        Suit([])
+    check_type_errors([])
 
 def test_invalid_suit_dict():
-    with pytest.raises(TypeError):
-        Suit({})
+    check_type_errors({})
 
 def test_invalid_suit_int():
-    with pytest.raises(TypeError):
-        Suit(3)
+    check_type_errors(3)
+
+def check_value_errors(user_input):
+    with pytest.raises(ValueError):
+        Suit(user_input)
+
+def test_invalid_suit_empty_string():
+    check_value_errors('')
+
+def test_invalid_suit_f():
+    check_value_errors('f')
 
 def test_valid_suit():
     suit = Suit('H')

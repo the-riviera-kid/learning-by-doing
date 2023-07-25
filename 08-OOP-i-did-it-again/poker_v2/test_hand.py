@@ -55,5 +55,14 @@ def test_three_of_a_kind():
 def test_four_of_a_kind():
     compare_hand_to_name('JC JD JS JH 5H', 'Four Of A Kind')
 
-# def test_straight():
-#     compare_hand_to_name('2H 3C 4S 5H 6D', 'Straight')
+def test_straight_v1():
+    compare_hand_to_name('2H 3C 4S 5H 6D', 'Straight')
+
+def test_straight_varied_order():
+    compare_hand_to_name('JD 8C 10S 9S 7D', 'Straight')
+
+def test_straight_ace_low():
+    compare_hand_to_name('AS 2H 3C 4S 5D', 'Straight')
+
+def test_straight_ace_high():
+    compare_hand_to_name('10H JH QC KD AS', 'Straight')

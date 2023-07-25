@@ -16,11 +16,9 @@ class Rank:
     def __gt__(self, other: object) -> bool:
         return self.RANKS.index(self.rank) > self.RANKS.index(other.rank)
         
-    def __lt__(self, other: object) -> bool:
-        if other.rank == '2':
-            self.RANKS.insert(0, 'A')
-        return self.RANKS.index(self.rank) < self.RANKS.index(other.rank)
-
     def __hash__(self) -> int:
         return self.rank.__hash__()
+    
+    def __sub__(self, other):
+        return self.RANKS.index(self.rank) - self.RANKS.index(other.rank)
     
