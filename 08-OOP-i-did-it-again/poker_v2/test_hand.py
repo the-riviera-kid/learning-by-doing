@@ -65,5 +65,14 @@ def test_straight_ace_low() -> None:
 def test_straight_ace_high() -> None:
     compare_hand_to_name('10H JH QC KD AS', 'Straight')
 
-# def test_flush() -> None:
-#     compare_hand_to_name('4H 8H 2H 9H 7H', 'Flush')
+def test_flush() -> None:
+    compare_hand_to_name('4H 8H 2H 9H 7H', 'Flush')
+
+def test_straight_flush() -> None:
+    compare_hand_to_name('AC 2C 3C 4C 5C', 'Straight Flush')
+
+def test_royal_flush() -> None:
+    compare_hand_to_name('10S JS QS KS AS', 'Royal Flush')
+
+def test_full_house() -> None:
+    compare_hand_to_name('4H 4D 4C 8S 8D', 'Full House')
