@@ -7,7 +7,7 @@ class Hand:
         self.hand = self._check_valid(hand) # ['10S', '5H', '6S', '7C', 'AS']
         self.cards = sorted([Card(card) for card in self.hand]) # ['5H', '6S', '7C', '10S', 'AS']
         self.hand_data = self._get_hand_data()
-        self.poker_hand = self._check_poker_hand()
+        self.poker_hand, self.placement = self._check_poker_hand()
 
     def _check_valid(self, hand: str) -> List[str]:
         if not isinstance(hand, str):
@@ -20,6 +20,12 @@ class Hand:
                 raise ValueError('Sorry, there are duplicate cards in your hand.')
         return cards_list
     
+    def __gt__(self, other: object) -> bool:
+        if isinstance(other, Rank):
+            return self.placement > Hand.placement
+        else:
+            raise NotImplementedError()
+
     def _get_hand_data(self) -> Dict[Rank, List[Card]]:
         ranks_dict: Dict[Rank, List[Card]] = {} # {'6': ['6H', '6C'], '2': ['2D'], 'J': ['JS', 'JD']}
         for card in self.cards:
@@ -28,26 +34,23 @@ class Hand:
             ranks_dict[card.rank].append(card)
         return ranks_dict
 
-    def _check_poker_hand(self) -> str:
+    def _check_poker_hand(self) -> tuple[str, int]:
         CHECKS = (
-            (self._check_four_of_a_kind, 'Four Of A Kind'),
-            (self._check_full_house, 'Full House'),
-            (self._check_three_of_a_kind, 'Three Of A Kind'),
-            (self._check_two_pair, 'Two Pair'),
-            (self._check_one_pair, 'One Pair'),
-            (self._check_royal_flush, 'Royal Flush'),
-            (self._check_straight_flush, 'Straight Flush'),
-            (self._check_straight, 'Straight'),
-            (self._check_flush, 'Flush'),
+            (self._check_four_of_a_kind, 'Four Of A Kind', 8),
+            (self._check_full_house, 'Full House', 7),
+            (self._check_three_of_a_kind, 'Three Of A Kind', 4),
+            (self._check_two_pair, 'Two Pair', 3),
+            (self._check_one_pair, 'One Pair', 2),
+            (self._check_royal_flush, 'Royal Flush', 10),
+            (self._check_straight_flush, 'Straight Flush', 9),
+            (self._check_straight, 'Straight', 5),
+            (self._check_flush, 'Flush', 6),
             )
         
-        for check, hand in CHECKS:
+        for check, hand, placement in CHECKS:
             if check():
-                return hand
-        return 'High Card'
-
-    def _check_full_house(self) -> bool:
-        return self._check_three_of_a_kind() and self._check_one_pair()
+                return hand, placement
+        return ('High Card', 1)
     
     def _check_n_of_a_kind(self, n: int) -> bool:
         return any([len(cards) == n for cards in self.hand_data.values()])
@@ -55,6 +58,9 @@ class Hand:
     def _check_four_of_a_kind(self) -> bool:
         return self._check_n_of_a_kind(4)
                     
+    def _check_full_house(self) -> bool:
+        return self._check_three_of_a_kind() and self._check_one_pair()
+    
     def _check_three_of_a_kind(self) -> bool:
         return self._check_n_of_a_kind(3)
 
