@@ -37,7 +37,16 @@ def can_staff_project(employees, project):
     return (len(eligible_employees) >= project['required_staff_count'], eligible_employees)
 
 def can_staff_multiple_projects(employees, projects):
-    pass
+    staff = employees
+    total_success = True
+    all_selected_staff = []
+    for p in projects:
+        success, required_staff = can_staff_project(staff, p)
+        total_success = total_success and success
+        all_selected_staff += required_staff
+        staff = [x for x in staff if x not in all_selected_staff]
+    return (total_success, all_selected_staff)
+
 
 if __name__ == '__main__':
     package = make_work_package('python', 6, 3)
