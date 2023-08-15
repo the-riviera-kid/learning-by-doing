@@ -1,3 +1,5 @@
+from itertools import chain
+
 def make_employee(name, skills):
     return {'name': name, 'skills': skills}
 
@@ -47,6 +49,44 @@ def can_staff_multiple_projects(employees, projects):
         staff = [x for x in staff if x not in all_selected_staff]
     return (total_success, all_selected_staff)
 
+def get_all_skills(employees):
+    all_skills = []
+    for employee in employees:
+        for skill in employee['skills']:
+            skill_name = skill['name']
+            if skill_name not in all_skills:
+                all_skills.append(skill_name)
+    return all_skills
+
+def get_all_skills_two(employees):
+    flattened_list = []
+    for skills in [employee['skills'] for employee in employees]:
+        flattened_list.extend(skills)
+    return set([skill['name'] for skill in flattened_list])
+
+def get_all_skills_three(employees):
+    flattened_list = chain.from_iterable([employee['skills'] for employee in employees])
+    return set([ skill['name'] for skill in flattened_list ])
+
+def get_best_employee(employees):
+    averages = []
+    for employee in employees:
+        skills = employee['skills']
+        total_ability_score = sum([skill['ability'] for skill in skills])
+        average = total_ability_score / len(skills)
+        averages.append({'name': employee['name'], 'average_ability': average})
+
+    return max(averages, key=lambda item: item['average_ability'])
+
+def get_best_employee_two(employees):
+    averages = [get_averages_for_employee(employee) for employee in employees]
+    return max(averages, key=lambda item: item['average_ability'])
+
+def get_averages_for_employee(employee):
+    skills = employee['skills']
+    total_ability_score = sum([skill['ability'] for skill in skills])
+    average = total_ability_score / len(skills)
+    return {'name': employee['name'], 'average_ability': average}
 
 
 if __name__ == '__main__':
@@ -65,6 +105,8 @@ if __name__ == '__main__':
     # of each; if four people know python, it should only print
     # 'python' once.
     skills = get_all_skills(EMPLOYEES)
+    skills = get_all_skills_two(EMPLOYEES)
+    skills = get_all_skills_three(EMPLOYEES)
     print("Here are all the skills we have in our staff:")
     for skill in skills:
         print(skill)
