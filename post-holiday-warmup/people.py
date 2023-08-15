@@ -115,3 +115,11 @@ if __name__ == '__main__':
     # their ability scores.
     best = get_best_employee(EMPLOYEES)
     print(f'Our best employee is {best["name"]}, with an average ability of {best["average_ability"]}')
+
+    # If you want a final exercise, print a report with every
+    # skill in the company, the average ability for that skill,
+    # and the names of the people with that skill. e.g.
+    #
+    # javascript (6.8): Simon, Suzie, Sam
+    # C++ (2.4): Jules, Jools, Julie, Julia
+    # Perl (7.0): Babs, Bill
