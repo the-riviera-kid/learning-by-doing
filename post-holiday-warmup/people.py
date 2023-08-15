@@ -48,6 +48,7 @@ def can_staff_multiple_projects(employees, projects):
     return (total_success, all_selected_staff)
 
 
+
 if __name__ == '__main__':
     package = make_work_package('python', 6, 3)
     success, employees = can_staff_project(EMPLOYEES, package)
@@ -59,3 +60,16 @@ if __name__ == '__main__':
     success, employees = can_staff_multiple_projects(EMPLOYEES, packages)
     print(success)
     print(employees)
+
+    # This should print every skill we have, but only one copy
+    # of each; if four people know python, it should only print
+    # 'python' once.
+    skills = get_all_skills(EMPLOYEES)
+    print("Here are all the skills we have in our staff:")
+    for skill in skills:
+        print(skill)
+
+    # To find the best employee, calculate the average of all
+    # their ability scores.
+    best = get_best_employee(EMPLOYEES)
+    print(f'Our best employee is {best["name"]}, with an average ability of {best["average_ability"]}')
