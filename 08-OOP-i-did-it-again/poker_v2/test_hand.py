@@ -105,8 +105,11 @@ def test_three_of_a_kind_tie_breaker() -> None:
 def test_three_of_a_kind_tie_breaker_false() -> None:
     assert (Hand('AS 3S 3H 3C 6S') > Hand('6S 6H 7C JD 6D')) == False
 
-# def test_full_house_tie_breaker() -> None:
-#     assert Hand('') > Hand('9C 9D 9S 9H 6H')
+def test_full_house_tie_breaker() -> None:
+    assert Hand('9C 9D 9S 10H 10S') > Hand('4H 4D 4C 8S 8D')
 
-# def test_full_house_tie_breaker() -> None:
-#     assert (Hand('9C 9D 9S 9H 6H') > Hand('JC JD JS JH 5H')) == False
+def test_full_house_tie_breaker_false() -> None:
+    assert (Hand('4H 4D 4C 8S 8D') > Hand('9C 9D 9S 6H 6S')) == False
+
+def test_full_house_tie_breaker_one_pair_is_lower() -> None:
+    assert Hand('9C 9D 9S 6H 6S') > Hand('4H 4D 4C 8S 8D')
