@@ -20,9 +20,29 @@ class Hand:
                 raise ValueError('Sorry, there are duplicate cards in your hand.')
         return cards_list
     
+    # def __gt__(self, other: object) -> bool:
+    #     if isinstance(other, Hand):
+    #         if self.placement == other.placement:
+    #             if self._tie_breaker(other) == self:
+    #                 return True
+    #             return False
+    #         return self.placement > other.placement
+    #     else:
+    #         raise NotImplementedError()
+
+    # def __gt__(self, other: object) -> bool:
+    #     if isinstance(other, Hand):
+    #         if self.placement == other.placement:
+    #             return self._tie_breaker(other) > other._tie_breaker(self)
+    #         return self.placement > other.placement
+    #     else:
+    #         raise NotImplementedError()
+
     def __gt__(self, other: object) -> bool:
-        if isinstance(other, Rank):
-            return self.placement > Hand.placement
+        if isinstance(other, Hand):
+            if self.placement == other.placement:
+                return self._tie_breaker(other) # returns a bool
+            return self.placement > other.placement
         else:
             raise NotImplementedError()
 
@@ -34,7 +54,7 @@ class Hand:
             ranks_dict[card.rank].append(card)
         return ranks_dict
 
-    def _check_poker_hand(self) -> tuple[str, int]:
+    def _check_poker_hand(self) -> 'tuple[str, int]':
         CHECKS = (
             (self._check_four_of_a_kind, 'Four Of A Kind', 8),
             (self._check_full_house, 'Full House', 7),
@@ -87,3 +107,27 @@ class Hand:
     def _check_flush(self) -> bool:
         return all([self.cards[i].suit == self.cards[i+1].suit for i in range(len(self.cards)-1)])
     
+    def _tie_breaker(self, other: 'Hand') -> bool: # should return a bool
+        TIE_CHECKS = {
+            '8': self._four_of_a_kind_tie_breaker,
+            # self._full_house_tie_breaker,
+            # self._three_of_a_kind_tie_breaker,
+            # self._two_pair_tie_breaker,
+            # self._one_pair_tie_breaker,
+            # self._royal_flush_tie_breaker,
+            # self._straight_flush_tie_breaker,
+            # self._straight_tie_breaker,
+            # self._flush_tie_breaker,
+        }
+
+        t_check = TIE_CHECKS[str(self.placement)]
+        return t_check(other)
+
+    def _four_of_a_kind_tie_breaker(self, other: 'Hand') -> bool:
+        for rank, card_list in self.hand_data.items():
+            if len(card_list) == 4:
+                t_breaker_1 = rank
+        for rank, card_list in other.hand_data.items():
+            if len(card_list) == 4:
+                t_breaker_2 = rank
+        return t_breaker_1.rank > t_breaker_2.rank

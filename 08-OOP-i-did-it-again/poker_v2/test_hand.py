@@ -35,7 +35,7 @@ def test_valid_hand() -> None:
     hand = Hand('3D 4H 8C JD KS')
     assert hand.hand == ['3D', '4H', '8C', 'JD', 'KS']
 
-def compare_hand_to_name(hand: str, poker_name: tuple[str, int]) -> None:
+def compare_hand_to_name(hand: str, poker_name: 'tuple[str, int]') -> None:
     assert Hand(hand)._check_poker_hand() == poker_name
 
 def test_high_card() -> None:
@@ -80,11 +80,14 @@ def test_full_house() -> None:
 def test_royal_flush_greater_than_straight_flush() -> None:
     assert Hand('10S JS QS KS AS').placement > Hand('AC 2C 3C 4C 5C').placement
 
-def test_four_of_a_kind_than_straight_flush() -> None:
+def test_four_of_a_kind_straight_flush() -> None:
     assert Hand('JC JD JS JH 5H').placement > Hand('6S 6H 7C JD 6D').placement
 
 def test_four_of_a_kind_tie() -> None:
     assert Hand('JC JD JS JH 5H').placement == Hand('JC JD JS JH 5H').placement
 
-# def test_four_of_a_kind_tie_different_hands() -> None:
-#     assert Hand('JC JD JS JH 5H') > Hand('9C 9D 9S 9H 6H')
+def test_four_of_a_kind_tie_different_hands() -> None:
+    assert Hand('JC JD JS JH 5H') > Hand('9C 9D 9S 9H 6H')
+
+def test_four_of_a_kind_tie_different_hands_false() -> None:
+    assert (Hand('9C 9D 9S 9H 6H') > Hand('JC JD JS JH 5H')) == False
