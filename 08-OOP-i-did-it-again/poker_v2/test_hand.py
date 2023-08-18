@@ -99,6 +99,12 @@ def test_one_pair_tie_breaker() -> None:
 def test_one_pair_tie_breaker_false() -> None:
     assert (Hand('AS 3S 5H 3C 6S') > Hand('2S 10S 8H 10C 7S')) == False
 
+def test_three_of_a_kind_tie_breaker() -> None:
+    assert (Hand('6S 6H 7C JD 6D') > Hand('2S 3S 3H 3C 7S'))
+
+def test_three_of_a_kind_tie_breaker_false() -> None:
+    assert (Hand('AS 3S 3H 3C 6S') > Hand('6S 6H 7C JD 6D')) == False
+
 # def test_full_house_tie_breaker() -> None:
 #     assert Hand('') > Hand('9C 9D 9S 9H 6H')
 

@@ -111,7 +111,7 @@ class Hand:
         TIE_CHECKS = {
             8: self._four_of_a_kind_tie_breaker,
             # 7: self._full_house_tie_breaker,
-            # 4: self._three_of_a_kind_tie_breaker,
+            4: self._three_of_a_kind_tie_breaker,
             # 3: self._two_pair_tie_breaker,
             2: self._one_pair_tie_breaker,
             # 10: self._royal_flush_tie_breaker,
@@ -134,3 +134,7 @@ class Hand:
 
     def _one_pair_tie_breaker(self, other: 'Hand') -> bool:
         return self._get_n_of_a_kind(2) > other._get_n_of_a_kind(2)
+    
+    def _three_of_a_kind_tie_breaker(self, other: 'Hand') -> bool:
+        return self._get_n_of_a_kind(3) > other._get_n_of_a_kind(3)
+    
