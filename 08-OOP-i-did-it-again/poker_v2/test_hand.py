@@ -83,11 +83,24 @@ def test_royal_flush_greater_than_straight_flush() -> None:
 def test_four_of_a_kind_straight_flush() -> None:
     assert Hand('JC JD JS JH 5H').placement > Hand('6S 6H 7C JD 6D').placement
 
-def test_four_of_a_kind_tie() -> None:
+# Must come back to this test........
+def test_four_of_a_kind_tie() -> None: # This is actually an invalid hand
     assert Hand('JC JD JS JH 5H').placement == Hand('JC JD JS JH 5H').placement
 
-def test_four_of_a_kind_tie_different_hands() -> None:
-    assert Hand('JC JD JS JH 5H') > Hand('9C 9D 9S 9H 6H')
+def test_four_of_a_kind_tie_breaker() -> None:
+    assert Hand('AC AD AS AH QH') > Hand('JC JD JS JH 5H')
 
-def test_four_of_a_kind_tie_different_hands_false() -> None:
+def test_four_of_a_kind_tie_breaker_false() -> None:
     assert (Hand('9C 9D 9S 9H 6H') > Hand('JC JD JS JH 5H')) == False
+
+def test_one_pair_tie_breaker() -> None:
+    assert (Hand('AS 10S 5H 10C 6S') > Hand('2S 3S 8H 3C 7S'))
+
+def test_one_pair_tie_breaker_false() -> None:
+    assert (Hand('AS 3S 5H 3C 6S') > Hand('2S 10S 8H 10C 7S')) == False
+
+# def test_full_house_tie_breaker() -> None:
+#     assert Hand('') > Hand('9C 9D 9S 9H 6H')
+
+# def test_full_house_tie_breaker() -> None:
+#     assert (Hand('9C 9D 9S 9H 6H') > Hand('JC JD JS JH 5H')) == False

@@ -41,7 +41,7 @@ class Hand:
     def __gt__(self, other: object) -> bool:
         if isinstance(other, Hand):
             if self.placement == other.placement:
-                return self._tie_breaker(other) # returns a bool
+                return self._tie_breaker(other)
             return self.placement > other.placement
         else:
             raise NotImplementedError()
@@ -107,27 +107,30 @@ class Hand:
     def _check_flush(self) -> bool:
         return all([self.cards[i].suit == self.cards[i+1].suit for i in range(len(self.cards)-1)])
     
-    def _tie_breaker(self, other: 'Hand') -> bool: # should return a bool
+    def _tie_breaker(self, other: 'Hand') -> bool:
         TIE_CHECKS = {
-            '8': self._four_of_a_kind_tie_breaker,
-            # self._full_house_tie_breaker,
-            # self._three_of_a_kind_tie_breaker,
-            # self._two_pair_tie_breaker,
-            # self._one_pair_tie_breaker,
-            # self._royal_flush_tie_breaker,
-            # self._straight_flush_tie_breaker,
-            # self._straight_tie_breaker,
-            # self._flush_tie_breaker,
+            8: self._four_of_a_kind_tie_breaker,
+            # 7: self._full_house_tie_breaker,
+            # 4: self._three_of_a_kind_tie_breaker,
+            # 3: self._two_pair_tie_breaker,
+            2: self._one_pair_tie_breaker,
+            # 10: self._royal_flush_tie_breaker,
+            # 9: self._straight_flush_tie_breaker,
+            # 5: self._straight_tie_breaker,
+            # 6: self._flush_tie_breaker,
         }
 
-        t_check = TIE_CHECKS[str(self.placement)]
+        t_check = TIE_CHECKS[self.placement]
         return t_check(other)
 
-    def _four_of_a_kind_tie_breaker(self, other: 'Hand') -> bool:
+    def _get_n_of_a_kind(self, n: int) -> Rank:
         for rank, card_list in self.hand_data.items():
-            if len(card_list) == 4:
-                t_breaker_1 = rank
-        for rank, card_list in other.hand_data.items():
-            if len(card_list) == 4:
-                t_breaker_2 = rank
-        return t_breaker_1.rank > t_breaker_2.rank
+            if len(card_list) == n:
+                return rank
+        raise ValueError(f'There are no ranks with a len of {n}')
+
+    def _four_of_a_kind_tie_breaker(self, other: 'Hand') -> bool:
+        return self._get_n_of_a_kind(4) > other._get_n_of_a_kind(4)
+
+    def _one_pair_tie_breaker(self, other: 'Hand') -> bool:
+        return self._get_n_of_a_kind(2) > other._get_n_of_a_kind(2)
