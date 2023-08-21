@@ -112,7 +112,7 @@ class Hand:
             8: self._four_of_a_kind_tie_breaker,
             7: self._full_house_tie_breaker,
             4: self._three_of_a_kind_tie_breaker,
-            # 3: self._two_pair_tie_breaker,
+            3: self._two_pair_tie_breaker,
             2: self._one_pair_tie_breaker,
             # 10: self._royal_flush_tie_breaker,
             # 9: self._straight_flush_tie_breaker,
@@ -124,10 +124,7 @@ class Hand:
         return t_check(other)
 
     def _get_n_of_a_kind(self, n: int) -> Rank:
-        for rank, card_list in self.hand_data.items():
-            if len(card_list) == n:
-                return rank
-        raise ValueError(f'There are no ranks with a len of {n}')
+        return self._get_all_n_of_a_kinds(n)[0]
 
     def _four_of_a_kind_tie_breaker(self, other: 'Hand') -> bool:
         return self._get_n_of_a_kind(4) > other._get_n_of_a_kind(4)
@@ -138,5 +135,19 @@ class Hand:
     def _three_of_a_kind_tie_breaker(self, other: 'Hand') -> bool:
         return self._get_n_of_a_kind(3) > other._get_n_of_a_kind(3)
         
-    def _full_house_tie_breaker(self, other: 'Hand') -> bool: # Double check the rules of full house tie breaker
+    def _full_house_tie_breaker(self, other: 'Hand') -> bool: # Tie break on 3 of a kind
         return self._three_of_a_kind_tie_breaker(other)
+    
+    def _two_pair_tie_breaker(self, other: 'Hand') -> bool:
+        self_rank = self._get_max_pair_ranks()
+        other_rank = other._get_max_pair_ranks()
+        if self_rank == other_rank:
+            return self._get_n_of_a_kind(1) > other._get_n_of_a_kind(1)
+        return self_rank > other_rank
+        
+    def _get_max_pair_ranks(self) -> Rank:
+        return max(self._get_all_n_of_a_kinds(2))
+
+    def _get_all_n_of_a_kinds(self, n: int) -> List[Rank]:
+        return [rank for rank, card_list in self.hand_data.items() if len(card_list) == n]
+    

@@ -113,3 +113,12 @@ def test_full_house_tie_breaker_false() -> None:
 
 def test_full_house_tie_breaker_one_pair_is_lower() -> None:
     assert Hand('9C 9D 9S 6H 6S') > Hand('4H 4D 4C 8S 8D')
+
+def test_two_pair_tie_breaker() -> None:
+    assert Hand('4H 10C 10H 5S 4D') > Hand('3H 8C 8H 9S 3D')
+
+def test_two_pair_tie_breaker_one_pair_is_lower() -> None:
+    assert Hand('2H 10C 10H 5S 2D') > Hand('3H 8C 8H 9S 3D')
+
+def test_two_pair_tie_breaker_both_pairs_tie() -> None:
+    assert Hand('2H 10C 10H KS 2D') > Hand('2C 10S 10D 5S 2S')
