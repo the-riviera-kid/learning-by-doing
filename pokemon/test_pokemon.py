@@ -27,4 +27,3 @@ def test_battle_two():
     carlas_pokemon = pokemon.create({}, 'charmander', 'fire', 5)
     result = shaams_pokemon['battle'](carlas_pokemon)
     assert result == "Oh no. Their charmander kicked bulbasaur's arse."
-
