@@ -1,9 +1,22 @@
-def create(name, type, health):
-    return {
-        'name': name,
-        'type': type,
-        'health': health
-    }
+def create(poke, name, type, health):
+    #poke = {} # creating the dictionary
+
+    # The next three lines initialize the dictionary
+    poke['name'] = name
+    poke['type'] = type
+    poke['health'] = health
+
+    def describe_this_pokemon():
+        return describe(poke)
+
+    poke['description'] = describe_this_pokemon
+
+    def battle_this_pokemon(some_other_pokemon):
+        return battle(poke, some_other_pokemon)
+
+    poke['battle'] = battle_this_pokemon
+
+    return poke
 
 def describe(this_pokemon):
     return (f"{this_pokemon['name']} is a "
