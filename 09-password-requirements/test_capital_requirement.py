@@ -5,15 +5,12 @@ def test_capital_requirement():
 
 def test_password_contains_a_capital_letter():
     password = MustContainCapitalRequirement()
-    result = password.check('Hello')
-    assert result == True
+    assert password.check('Hello') == True
 
 def test_password_contains_no_capital_letter():
     password = MustContainCapitalRequirement()
-    result = password.check('hello')
-    assert result == False
+    assert password.check('hello') == False
 
 def test_message():
     password = MustContainCapitalRequirement()
-    result = password.message()
-    assert result == 'The password must contain at least one capital letter.'
+    assert password.message() == 'The password must contain at least one capital letter.'
