@@ -19,24 +19,6 @@ class Hand:
             if cards_list[i] == cards_list[i+1]:
                 raise ValueError('Sorry, there are duplicate cards in your hand.')
         return cards_list
-    
-    # def __gt__(self, other: object) -> bool:
-    #     if isinstance(other, Hand):
-    #         if self.placement == other.placement:
-    #             if self._tie_breaker(other) == self:
-    #                 return True
-    #             return False
-    #         return self.placement > other.placement
-    #     else:
-    #         raise NotImplementedError()
-
-    # def __gt__(self, other: object) -> bool:
-    #     if isinstance(other, Hand):
-    #         if self.placement == other.placement:
-    #             return self._tie_breaker(other) > other._tie_breaker(self)
-    #         return self.placement > other.placement
-    #     else:
-    #         raise NotImplementedError()
 
     def __gt__(self, other: object) -> bool:
         if isinstance(other, Hand):
@@ -114,10 +96,9 @@ class Hand:
             4: self._three_of_a_kind_tie_breaker,
             3: self._two_pair_tie_breaker,
             2: self._one_pair_tie_breaker,
-            # 10: self._royal_flush_tie_breaker,
-            # 9: self._straight_flush_tie_breaker,
-            # 5: self._straight_tie_breaker,
-            # 6: self._flush_tie_breaker,
+            9: self._straight_flush_tie_breaker,
+            5: self._straight_tie_breaker,
+            6: self._flush_tie_breaker,
         }
 
         t_check = TIE_CHECKS[self.placement]
@@ -151,3 +132,14 @@ class Hand:
     def _get_all_n_of_a_kinds(self, n: int) -> List[Rank]:
         return [rank for rank, card_list in self.hand_data.items() if len(card_list) == n]
     
+    def _get_max_ranks(self, other: 'Hand') -> bool:
+        return max(self.hand_data.keys()) > max(other.hand_data.keys())
+
+    def _straight_tie_breaker(self, other: 'Hand') -> bool:
+        return self._get_max_ranks(other)
+    
+    def _flush_tie_breaker(self, other: 'Hand') -> bool:
+        return self._get_max_ranks(other)
+    
+    def _straight_flush_tie_breaker(self, other: 'Hand') -> bool:
+        return self._get_max_ranks(other)

@@ -122,3 +122,18 @@ def test_two_pair_tie_breaker_one_pair_is_lower() -> None:
 
 def test_two_pair_tie_breaker_both_pairs_tie() -> None:
     assert Hand('2H 10C 10H KS 2D') > Hand('2C 10S 10D 5S 2S')
+
+def test_straight_tie_breaker() -> None:
+    assert Hand('9H 10C JS QH KD') > Hand('2H 3C 4S 5H 6D')
+
+def test_straight_tie_breaker_v2() -> None:
+    assert Hand('10C JS QH KD AC') > Hand('9C 10C JS QH KD')
+    
+def test_straight_no_tie_breaker() -> None:
+    assert not Hand('10C JS QH KD AC') > Hand('10S JC QD KH AS')
+
+def test_flush_tie_breaker() -> None:
+    assert Hand('9C 10C JC QC KC') > Hand('4H 8H 2H 9H 7H')
+
+def test_straight_flush_tie_breaker() -> None:
+    assert Hand('AC 2C 3C 4C 5C') > Hand('5H 8H 6H 9H 7H')
