@@ -7,10 +7,10 @@ def main() -> None:
 
     if player_1 > player_2:
         print('Player 1 wins!')
-        print(f'A {player_1.poker_hand} beats A {player_2.poker_hand}')
+        print(f'A {player_1} beats A {player_2}')
     else:
         print('Player 2 wins!')
-        print(f'A {player_2.poker_hand} beats A {player_1.poker_hand}')
+        print(f'A {player_2} beats A {player_1}')
 
 
 if __name__ == '__main__':
