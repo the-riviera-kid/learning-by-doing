@@ -2,6 +2,7 @@ from card import Card
 from rank import Rank
 from typing import List, Dict
 
+
 class Hand:
     def __init__(self, hand: str) -> None: # 'AS 10S 5H 7C 6S'
         self.hand = self._check_valid(hand) # ['10S', '5H', '6S', '7C', 'AS']
@@ -27,6 +28,9 @@ class Hand:
             return self.placement > other.placement
         else:
             raise NotImplementedError()
+
+    def __str__(self) -> str:
+        return self.poker_hand
 
     def _get_hand_data(self) -> Dict[Rank, List[Card]]:
         ranks_dict: Dict[Rank, List[Card]] = {} # {'6': ['6H', '6C'], '2': ['2D'], 'J': ['JS', 'JD']}

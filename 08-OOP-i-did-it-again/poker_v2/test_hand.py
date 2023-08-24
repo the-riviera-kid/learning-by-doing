@@ -2,6 +2,7 @@ from hand import Hand
 import pytest
 from typing import Any
 
+
 def check_type_errors(user_input: Any) -> None:
     with pytest.raises(TypeError):
         Hand(user_input)

@@ -1,6 +1,7 @@
 from suit import Suit
 from rank import Rank
 
+
 class Card:
     def __init__(self, card: str) -> None:
         self.card = self._check_valid(card)

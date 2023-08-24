@@ -2,6 +2,7 @@ from card import Card
 import pytest
 from typing import Any
 
+
 def check_type_errors(user_input: Any) -> None:
     with pytest.raises(TypeError):
         Card(user_input)
