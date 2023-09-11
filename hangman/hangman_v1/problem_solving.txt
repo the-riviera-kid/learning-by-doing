@@ -1,0 +1,56 @@
+HANGMAN
+1. word list
+2. generate a word
+3. blanks for each letter in word
+4. Player gets 6 chances to guess an incorrect letter
+5. check if the letter is in the word
+6. if the letter is not in the word, add that letter to a lists of incorrect guesses
+7. Add a part of the hangman and display 
+8. If no guesses left, all the parts of hangman should be displayed and the game is over
+9. If Player guesses a letter that is in the word, fill in the blank and display the blanks with that letter filled in
+10. If the Player guesses all the letters in the word, Player wins!
+
+Class:
+ - Word -> keeps track of the progress of correctly guessed letters
+    Properties:
+     - letters
+     - blanks for letters
+        Methods:
+         - generate a word from a wordlist
+         - check if guessed letter in the word
+         - display blanks with correct letters filled in
+
+Class:
+ - Letter
+    Properties:
+     - letter
+     - have I been guessed or not? -> blank or letter
+        Methods:
+        - check if letter has been guessed (either display a blank if incorrect, or the letter if correct)
+        - __str__ -> to either return _ or the actual letter
+
+Class:
+ - Hangman -> keeps track of the progress of incorrect guessed letters
+    Properties:
+     - head
+     - body
+     - R arm
+     - L arm
+     - R leg
+     - L leg
+        Methods:
+         - display current hangman and number of guesses left and all incorrectly guessed letters
+         - add a part for each incorrect guess
+         - keep a list of incorrect letters
+         - keep track of the guesses left
+
+Class:
+ - Game -> run the game by the rules
+    Properties:
+     - Word
+     - Hangman
+        Method:
+         - validation (check for capital letters or foreign characters)
+         - play_game
+         - if word is guessed, winner
+         - if no guesses, end game
