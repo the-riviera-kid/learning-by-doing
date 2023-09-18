@@ -27,10 +27,13 @@ def test_get_word_with_some_blanks() -> None:
 def test_print_current_word() -> None:
     word = Word('cat')
     word.is_letter_in_word('a')
-    word.get_word_with_blanks()
     assert str(word) == '_ a _'
 
 def test_equals() -> None:
-  word = Word('dog')
-  assert word == Word('dog')
-  assert not word == Word('cat')
+    word = Word('dog')
+    assert word == Word('dog')
+    assert not word == Word('cat')
+
+def test_word_has_blanks() -> None:
+    word = Word('dog')
+    assert word.word_has_blanks()
