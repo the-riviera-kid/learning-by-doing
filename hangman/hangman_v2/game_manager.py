@@ -1,5 +1,6 @@
 from word_collection import WordCollection
 from hangman import Hangman
+from guess_counter import GuessCounter
 
 class GameManager:
     def __init__(self, word_list: WordCollection) -> None:
@@ -7,17 +8,15 @@ class GameManager:
         self.word = self.word_list.get_random_word()
 
     def play(self) -> object:
-        guesses = 6
-        while self.word.has_blanks and guesses != 0:
+        guesses = GuessCounter()
+        while self.word.has_blanks and guesses.current_guesses != 0:
             good_guess = self.word.is_letter_in_word(input('Guess a letter: '))
             if not good_guess:
-                guesses -= 1
-                hangman = Hangman(guesses)
-                print(hangman)
-                print(f'You have {guesses} guesses')
-            print(self.word.current_word)
-        if guesses == 0:
-            print(f'Game Over')
+                guesses_remaining = guesses.update_guesses()
+                hangman = Hangman(guesses_remaining)
+                print(hangman, end='\n\n')
+                print(guesses, end='\n\n')
+            print(self.word.current_word, end='\n\n')
         return self.word
 
 
