@@ -1,5 +1,17 @@
 class Counter:
-    pass
+    def __init__(self) -> None:
+        self.result = 0
+
+    def add(self) -> int:
+        self.result += 1
+        return self.result
+
+    def total(self) -> int:
+        return self.result
+    
+    def reset(self) -> int:
+        self.result = 0
+        return self.result
 
 # CARLA BOUNDARY
 # Fill in the blanks in the Counter class to make
@@ -7,6 +19,10 @@ class Counter:
 # to change any code under the Carla Boundary.
 # -----------------------------------------------
 
+
+# add() -> add 2 numbers together (one of the numbers is always 1)
+# total() -> presents the total
+# reset() -> sets the total to zero
 
 pies_eaten = Counter()
 pies_eaten.add()
