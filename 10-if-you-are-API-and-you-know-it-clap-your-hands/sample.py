@@ -1,5 +1,7 @@
-import urllib.request
-import json
+import urllib.request # actually communicates with websites
+import json # module to convert to/from json (web data)
+
+# Open a URL 
 with urllib.request.urlopen("https://api.isevenapi.xyz/api/iseven/6/") as u:
     obj = json.load(u)
     print(obj['iseven'])
