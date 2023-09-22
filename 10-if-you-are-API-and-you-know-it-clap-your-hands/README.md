@@ -1,18 +1,21 @@
 # If You're API And You Know It Clap Your Hands
 
+Today we're moving on to another topic. You have the very basics of programming now, so let's look at some more interesting things that you can do with them. We're going to start looking at interacting with other systems, starting with something you're familiar with: websites! Specifically, web APIs. "web API" is a fancy way of saying "a website intended for a computer to use, as opposed to a human."
+
+We're going to go through an example together, and then you're going to try to write your own programs to use some simple APIs. Everything you've learned so far - functions, classes, tests - it's all still important. We're just using it in more interesting ways.
+
 ## Your Mission
 
+There's a lot to go through, no rush. Reading the documentation on the API websites is part of the exercise.
 
-## What Are We Doing Exactly?
+1. Read through and follow `demo.py`. Solve the exercise at the end.
+2. Use the Evil Insult Generator (https://evilinsult.com/api/#generate-insult-get) to print five insults to the terminal.
+3. Use the Coffee API (https://coffee.alexflipnote.dev/) to to get a random image of a coffee and display it. 
+  * hint:
+``` python
+import subprocess
+subrocess.run(['firefox', 'www.github.com'])
+```
+4. Write a program that acts as a menu driven interface to the Advice API (https://api.adviceslip.com/). The user should be able to get a random piece of advice, get advice by ID, or search by keyword and see a list of matching IDs.
 
 
-# Restrictions
-* You should be able to run the finished system from the command line, and you should also have unit tests for your classes.
-* Remember that we want this system to be flexible; test that you can pass different numbers of requirements into your PasswordChecker.
-* Your program should be split up into modules; you can do this at your own discretion, but you should at least keep your `main` in a different module from your class defintions..
-* Your module `main.py` contains your import guard and your main function.
-* `main.py` *should* be as simple as possible. Most of your program's logic should be in the classes.
-* Each test may only have one assert.
-* Gijs Compensation Measures are still in effect: no globals.
-* As standard from now on, no raw code; everything must be in a function apart from import guards, constants, and decorators.
-* A hint; the PasswordChecker needs at least one Requirement in order to do anything useful. Maybe write one of the Requirements first?
