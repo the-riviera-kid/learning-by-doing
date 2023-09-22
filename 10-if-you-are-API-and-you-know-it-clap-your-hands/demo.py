@@ -24,13 +24,15 @@ r = requests.get(combined_url)
 # That was is. The information from that URL is now in your program.
 # Let's have a look at it.
 print(r)
-# An advert? The bastards! Let's get rid of that; we only want to know
-# the answer to our question, so let's parse that data and just get
-# the part we want. Like most web APIs, it's returned JSON data,
+# The response code (200) means "OK", but that's not much use.
+# Like most web APIs, Is Even returns structured JSON data,
 # which Requests can turn into a Python dictionary for us:
 obj = r.json()
-# Marvellous. Now, we can just index into that dictionary with the
-# 'iseven' key to get the result.
+# Great! Let's take a peek:
+print(obj)
+# So, we can see the answer, and... an advert? The bastards!
+# Let's just index into that dictionary with the 'iseven' key
+# to get just the result, and ignore the advert.
 print(obj['iseven'])
 # Again, a lot of work for `not x%2`, but it hopefully shows that
 # calling web APIs doesn't have to be difficult. I strongly
@@ -38,10 +40,30 @@ print(obj['iseven'])
 # it's super simple, but practicing reading documentation is an
 # important skill. You may as well practice on the easy stuff.
 
+
+
+# Next one! Do you want cat facts as a service? Well, we're doing
+# it anyway. You can read the documentation for this API here:
+    # https://github.com/wh-iterabb-it/meowfacts#description
+# So, let's ask the user how many cat facts they want:
 number_of_facts = input("How many cat facts do you want to know? : ")
+# ...and let's store the URL of the API.
 url = "https://meowfacts.herokuapp.com/"
+# You can see in the documentation that this API takes its
+# arguments in a slightly different way. Rather than just putting
+# the number of facts on the end of the URL, it needs what's called
+# a Query String - the bit at the end with a question mark, named
+# parameters and values:
+    # https://meowfacts.herokuapp.com/?count=3
+# We could edit the URL ourselves, but Requests has a way to make
+# it easier and less prone to errors:
 arguments = {'count': number_of_facts}
 r = requests.get(url, params=arguments)
+# Easy as that. Now we convert the response to a Python dictionary...
 obj = r.json()
+# And print out all the amazing cat facts.
 for fact in obj['data']:
     print(fact)
+
+# EXERCISE
+# Can you print the cat facts in Spanish? (hint: read the documentation)
